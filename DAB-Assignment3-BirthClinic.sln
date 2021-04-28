@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DAB-Assignment3-BirthClinic", "DAB-Assignment3-BirthClinic\DAB-Assignment3-BirthClinic.csproj", "{F3DFDA57-4280-4B17-BE6A-4264FB0178E5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F3DFDA57-4280-4B17-BE6A-4264FB0178E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3DFDA57-4280-4B17-BE6A-4264FB0178E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3DFDA57-4280-4B17-BE6A-4264FB0178E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F3DFDA57-4280-4B17-BE6A-4264FB0178E5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29D45ABF-7C87-455C-994C-DB476DD51777}
+	EndGlobalSection
+EndGlobal
