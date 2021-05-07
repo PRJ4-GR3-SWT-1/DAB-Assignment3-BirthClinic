@@ -88,7 +88,7 @@ namespace DAB_Assignment3_BirthClinic
         // 5. View
         //Given a birth can planned
         //    a) Show the rooms reserved the birth
-        //b) Show the clinicians assigned the birth
+        //    b) Show the clinicians assigned the birth
 
 
 

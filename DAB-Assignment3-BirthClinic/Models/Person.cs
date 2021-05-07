@@ -34,9 +34,11 @@ namespace DAB_Assignment3_BirthClinic.Models
 
     public class Clinician:Person
     {
-        public Clinician(string FullName) : base(FullName)
+        public string Type;
+        public Clinician(string FullName, string type) : base(FullName)
         {
-          //  AssociatedBirths = new List<ClinicianBirth>();
+            Type = type;
+            //  AssociatedBirths = new List<ClinicianBirth>();
         }
         public List<ClinicianBirth> AssociatedBirths { get; set; }
     }
@@ -72,7 +74,7 @@ namespace DAB_Assignment3_BirthClinic.Models
 
     public class MidWife : Clinician
     {
-        public MidWife(string FullName) : base(FullName)
+        public MidWife(string FullName) : base(FullName, "MidWife")
         {
 
         }
@@ -81,7 +83,7 @@ namespace DAB_Assignment3_BirthClinic.Models
 
     public class Doctor : Clinician
     {
-        public Doctor(string FullName) : base(FullName)
+        public Doctor(string FullName) : base(FullName, "Doctor")
         {
 
         }
@@ -89,14 +91,14 @@ namespace DAB_Assignment3_BirthClinic.Models
 
     public class Nurse : Clinician
     {
-        public Nurse(string FullName) : base(FullName)
+        public Nurse(string FullName) : base(FullName, "Nurse")
         {
         }
     }
 
     public class SocialHealthAssistant : Clinician
     {
-        public SocialHealthAssistant(string FullName) : base(FullName)
+        public SocialHealthAssistant(string FullName, "SocialAndHealthAssistant") : base(FullName)
         {
         }
     }
