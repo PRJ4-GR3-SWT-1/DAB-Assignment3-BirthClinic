@@ -98,7 +98,7 @@ namespace DAB_Assignment3_BirthClinic.Models
 
     public class SocialHealthAssistant : Clinician
     {
-        public SocialHealthAssistant(string FullName, "SocialAndHealthAssistant") : base(FullName)
+        public SocialHealthAssistant(string FullName) : base(FullName, "SocialAndHealthAssistant")
         {
         }
     }
