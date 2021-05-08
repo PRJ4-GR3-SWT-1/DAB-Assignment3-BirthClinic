@@ -10,17 +10,18 @@ namespace DAB_Assignment3_BirthClinic.Models
     {
         public Birth()
         {
-            Clinicians = new List<Clinician>();
+            BirthId = GlobalNumbers.Instance.getBirthId();
+            CliniciansId = new List<int>();
         }
-        [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        public ObjectId _id { get; set; }
+
+        public int id { get; set; }
         public int BirthId { get; set; }
         public Child Child { get; set; }
 
        
         
-        public List<Clinician> Clinicians { get; set; }
+       // public List<Clinician> Clinicians { get; set; }
+       public List<int> CliniciansId { get; set; }
         public DateTime PlannedStartTime { get; set; }
     }
 }
