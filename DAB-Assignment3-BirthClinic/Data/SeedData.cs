@@ -11,7 +11,7 @@ namespace BirthClinicLibrary.Data
     public class SeedData
     {
 
-        public SeedData(IMongoCollection<Room> roomCollection, IMongoCollection<Person> personCollection)
+        public SeedData(IMongoCollection<Room> roomCollection, IMongoCollection<Clinician> personCollection)
         {
             SeedRooms(roomCollection);
             SeedClinicians(personCollection);
@@ -132,22 +132,22 @@ namespace BirthClinicLibrary.Data
 
 
 
-        private static void SeedClinicians(IMongoCollection<Person> collection)
+        private static void SeedClinicians(IMongoCollection<Clinician> collection)
         {
-            List<Person> clinicians = new List<Person>();
+            List<Clinician> clinicians = new List<Clinician>();
 
             #region MidWives
 
-            Person M1 = new MidWife("Mary");
-            Person M2 = new MidWife("Malfred");
-            Person M3 = new MidWife("Marius");
-            Person M4 = new MidWife("Marianne");
-            Person M5 = new MidWife("Morten");
-            Person M6 = new MidWife("Marie");
-            Person M7 = new MidWife("Molly");
-            Person M8 = new MidWife("Mingming");
-            Person M9 = new MidWife("Mulle");
-            Person M10 = new MidWife("Mads");
+            Clinician M1 = new MidWife("Mary");
+            Clinician M2 = new MidWife("Malfred");
+            Clinician M3 = new MidWife("Marius");
+            Clinician M4 = new MidWife("Marianne");
+            Clinician M5 = new MidWife("Morten");
+            Clinician M6 = new MidWife("Marie");
+            Clinician M7 = new MidWife("Molly");
+            Clinician M8 = new MidWife("Mingming");
+            Clinician M9 = new MidWife("Mulle");
+            Clinician M10 = new MidWife("Mads");
             clinicians.Add(M1);
             clinicians.Add(M2);
             clinicians.Add(M3);
@@ -161,11 +161,11 @@ namespace BirthClinicLibrary.Data
             #endregion
 
             #region Doctors
-            Person D1 = new Doctor("Dorthe");
-            Person D2 = new Doctor("Dennis");
-            Person D3 = new Doctor("Dina");
-            Person D4 = new Doctor("Daniel");
-            Person D5 = new Doctor("Daniella");
+            Clinician D1 = new Doctor("Dorthe");
+            Clinician D2 = new Doctor("Dennis");
+            Clinician D3 = new Doctor("Dina");
+            Clinician D4 = new Doctor("Daniel");
+            Clinician D5 = new Doctor("Daniella");
 
             clinicians.Add(D1);
             clinicians.Add(D2);
@@ -175,26 +175,26 @@ namespace BirthClinicLibrary.Data
             #endregion
 
             #region Nurses
-            Person N1 = new Nurse("Nete");
-            Person N2 = new Nurse("Nathan");
-            Person N3 = new Nurse("Natalie");
-            Person N4 = new Nurse("Noel");
-            Person N5 = new Nurse("Nadja");
-            Person N6 = new Nurse("Nessa");
-            Person N7 = new Nurse("Naja");
-            Person N8 = new Nurse("Nikoline");
-            Person N9 = new Nurse("Nik");
-            Person N10 = new Nurse("Nikolaj");
-            Person N11 = new Nurse("Niklas");
-            Person N12 = new Nurse("Nor");
-            Person N13 = new Nurse("Nazarat");
-            Person N14 = new Nurse("Neo");
-            Person N15 = new Nurse("Nasir");
-            Person N16 = new Nurse("Niller");
-            Person N17 = new Nurse("Niko");
-            Person N18 = new Nurse("Niels");
-            Person N19 = new Nurse("Niels-Erik");
-            Person N20 = new Nurse("Niels-Ove");
+            Clinician N1 = new Nurse("Nete");
+            Clinician N2 = new Nurse("Nathan");
+            Clinician N3 = new Nurse("Natalie");
+            Clinician N4 = new Nurse("Noel");
+            Clinician N5 = new Nurse("Nadja");
+            Clinician N6 = new Nurse("Nessa");
+            Clinician N7 = new Nurse("Naja");
+            Clinician N8 = new Nurse("Nikoline");
+            Clinician N9 = new Nurse("Nik");
+            Clinician N10 = new Nurse("Nikolaj");
+            Clinician N11 = new Nurse("Niklas");
+            Clinician N12 = new Nurse("Nor");
+            Clinician N13 = new Nurse("Nazarat");
+            Clinician N14 = new Nurse("Neo");
+            Clinician N15 = new Nurse("Nasir");
+            Clinician N16 = new Nurse("Niller");
+            Clinician N17 = new Nurse("Niko");
+            Clinician N18 = new Nurse("Niels");
+            Clinician N19 = new Nurse("Niels-Erik");
+            Clinician N20 = new Nurse("Niels-Ove");
 
 
             clinicians.Add(N1);
@@ -220,26 +220,26 @@ namespace BirthClinicLibrary.Data
             #endregion
 
             #region SHAssistans
-            Person SHA1 = new SocialHealthAssistant("Harry");
-            Person SHA2 = new SocialHealthAssistant("Harper");
-            Person SHA3 = new SocialHealthAssistant("Hans");
-            Person SHA4 = new SocialHealthAssistant("Hope");
-            Person SHA5 = new SocialHealthAssistant("Harriet");
-            Person SHA6 = new SocialHealthAssistant("Hal");
-            Person SHA7 = new SocialHealthAssistant("Hamlet");
-            Person SHA8 = new SocialHealthAssistant("Hubert");
-            Person SHA9 = new SocialHealthAssistant("Holger");
-            Person SHA10 = new SocialHealthAssistant("Holmer");
-            Person SHA11 = new SocialHealthAssistant("Hansi");
-            Person SHA12 = new SocialHealthAssistant("Hylle");
-            Person SHA13 = new SocialHealthAssistant("Henrik");
-            Person SHA14 = new SocialHealthAssistant("Hermione");
-            Person SHA15 = new SocialHealthAssistant("Heidi");
-            Person SHA16 = new SocialHealthAssistant("Helene");
-            Person SHA17 = new SocialHealthAssistant("Helena");
-            Person SHA18 = new SocialHealthAssistant("Hailey");
-            Person SHA19 = new SocialHealthAssistant("Henriette");
-            Person SHA20 = new SocialHealthAssistant("Hanne");
+            Clinician SHA1 = new SocialHealthAssistant("Harry");
+            Clinician SHA2 = new SocialHealthAssistant("Harper");
+            Clinician SHA3 = new SocialHealthAssistant("Hans");
+            Clinician SHA4 = new SocialHealthAssistant("Hope");
+            Clinician SHA5 = new SocialHealthAssistant("Harriet");
+            Clinician SHA6 = new SocialHealthAssistant("Hal");
+            Clinician SHA7 = new SocialHealthAssistant("Hamlet");
+            Clinician SHA8 = new SocialHealthAssistant("Hubert");
+            Clinician SHA9 = new SocialHealthAssistant("Holger");
+            Clinician SHA10 = new SocialHealthAssistant("Holmer");
+            Clinician SHA11 = new SocialHealthAssistant("Hansi");
+            Clinician SHA12 = new SocialHealthAssistant("Hylle");
+            Clinician SHA13 = new SocialHealthAssistant("Henrik");
+            Clinician SHA14 = new SocialHealthAssistant("Hermione");
+            Clinician SHA15 = new SocialHealthAssistant("Heidi");
+            Clinician SHA16 = new SocialHealthAssistant("Helene");
+            Clinician SHA17 = new SocialHealthAssistant("Helena");
+            Clinician SHA18 = new SocialHealthAssistant("Hailey");
+            Clinician SHA19 = new SocialHealthAssistant("Henriette");
+            Clinician SHA20 = new SocialHealthAssistant("Hanne");
 
             clinicians.Add(SHA1);
             clinicians.Add(SHA2);
@@ -264,10 +264,10 @@ namespace BirthClinicLibrary.Data
             #endregion
 
             #region Secretary
-            Person s1 = new Secretary("Susan");
-            Person s2 = new Secretary("Simon");
-            Person s3 = new Secretary("Sam");
-            Person s4 = new Secretary("Susanne");
+            Clinician s1 = new Secretary("Susan");
+            Clinician s2 = new Secretary("Simon");
+            Clinician s3 = new Secretary("Sam");
+            Clinician s4 = new Secretary("Susanne");
 
             clinicians.Add(s1);
             clinicians.Add(s2);
