@@ -11,7 +11,7 @@ namespace BirthClinicLibrary.Data
     public class SeedData
     {
 
-        public SeedData(IMongoCollection<Room> roomCollection, IMongoCollection<Person> personCollection)
+        public SeedData(IMongoCollection<Room> roomCollection, IMongoCollection<Clinician> personCollection)
         {
             SeedRooms(roomCollection);
             SeedClinicians(personCollection);
