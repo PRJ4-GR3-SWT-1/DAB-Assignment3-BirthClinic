@@ -169,7 +169,7 @@ namespace DAB_Assignment3_BirthClinic
                     //CancelRoomReservation(context);
                     break;
                 case ConsoleKey.S:
-                    //SeedData(RoomCollection, PersonCollection);
+                    SeedData(collectionRooms, CollectionClinicians);
                     break;
                 default:
                     Console.WriteLine("Ugyldigt valg");
