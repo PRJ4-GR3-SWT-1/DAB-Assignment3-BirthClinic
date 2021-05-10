@@ -32,6 +32,9 @@ namespace DAB_Assignment3_BirthClinic
             collectionOtherPersons = database.GetCollection<Person>("OtherPersons");
             collectionRooms = database.GetCollection<Room>("Rooms");
             collectionReservations = database.GetCollection<Reservation>("Reservations");
+
+            AddBirth();
+
             bool _running = true;
             while (_running)
             {
@@ -185,11 +188,24 @@ namespace DAB_Assignment3_BirthClinic
             }
         }
 
-        public void AddBirth()
+        public static void AddBirth()
         {
             // Til når brugeren skal vælge doctor og midwife.
-          //  List<Doctor> doctors = context.Doctor.ToList();
-          //  List<MidWife> midWives = context.MidWife.ToList();
+            //var doctorFilter = Builders<Clinician>.Filter.All("Type", "Doctor");
+            List<Clinician> doctors = collectionClinicians.Find(r=>r.Type=="Doctor").ToList();
+            List<Clinician> midWives = collectionClinicians.Find(r => r.Type == "MidWife").ToList();
+
+            foreach (var doc in doctors)
+            {
+                Console.WriteLine(doc.FullName);
+            }
+
+            foreach (var doc in midWives)
+            {
+                Console.WriteLine(doc.FullName);
+            }
+
+            return;
 
             Console.WriteLine("Velkommen til reservation af fødsel");
             Console.WriteLine("-----------------------------------");
