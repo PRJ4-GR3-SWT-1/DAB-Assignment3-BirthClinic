@@ -34,6 +34,7 @@ namespace DAB_Assignment3_BirthClinic
             collectionRooms = database.GetCollection<Room>("Rooms");
             collectionReservations = database.GetCollection<Reservation>("Reservations");
             _running = true;
+            AddBirth();
             while (_running)
             {
                 Console.WriteLine("Muligheder: ");

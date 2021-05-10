@@ -12,6 +12,7 @@ namespace DAB_Assignment3_BirthClinic.Models
         protected Person(string name, string type)
         {
             FullName = name;
+            Type = type;
             PersonId = GlobalNumbers.Instance.getPersonId();
         }
         [BsonId]
