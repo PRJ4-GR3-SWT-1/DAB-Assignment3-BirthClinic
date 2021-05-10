@@ -263,7 +263,7 @@ namespace BirthClinicLibrary.Data
             clinicians.Add(SHA20);
             #endregion
 
-            #region 
+            #region Secretary
             Person s1 = new Secretary("Susan");
             Person s2 = new Secretary("Simon");
             Person s3 = new Secretary("Sam");

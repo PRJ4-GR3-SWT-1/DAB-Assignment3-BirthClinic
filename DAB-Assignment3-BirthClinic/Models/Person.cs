@@ -42,9 +42,9 @@ namespace DAB_Assignment3_BirthClinic.Models
         }
         public List<ClinicianBirth> AssociatedBirths { get; set; }
     }
-    public class Secretary : Person
+    public class Secretary : Clinician
     {
-        public Secretary(string FullName) : base(FullName)
+        public Secretary(string FullName) : base(FullName, "Secretary")
         {
 
         }
