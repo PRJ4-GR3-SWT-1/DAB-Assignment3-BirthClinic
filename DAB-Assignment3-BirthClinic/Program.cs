@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using BirthClinicLibrary.Data;
@@ -185,6 +186,155 @@ namespace DAB_Assignment3_BirthClinic
             }
         }
 
+        public void AddBirth()
+        {
+            // Til når brugeren skal vælge doctor og midwife.
+          //  List<Doctor> doctors = context.Doctor.ToList();
+          //  List<MidWife> midWives = context.MidWife.ToList();
+
+            Console.WriteLine("Velkommen til reservation af fødsel");
+            Console.WriteLine("-----------------------------------");
+
+            Console.WriteLine("Hvad er navnet på barnet");
+            string childName = Console.ReadLine();
+
+            Console.WriteLine("Hvad er navnet på moderen til barnet");
+            string motherName = Console.ReadLine();
+
+            Console.WriteLine("Hvad er navnet på faderen til barnet");
+            string fatherName = Console.ReadLine();
+
+            Console.WriteLine("Hvilken dato vil du have reservationen til. Skriv på formen DD/MM/ÅÅÅÅ");
+            string dato = Console.ReadLine();
+            string[] datoOpsplittet = dato.Split("/");
+            int dag = int.Parse(datoOpsplittet[0]);
+            int måned = int.Parse(datoOpsplittet[1]);
+            int år = int.Parse(datoOpsplittet[2]);
+
+            Console.WriteLine("Hvilken tid vil du have reservationen. Skriv på formen TT.MM");
+            string tid = Console.ReadLine();
+            string[] tidOpsplittet = tid.Split(".");
+            int time = int.Parse(tidOpsplittet[0]);
+            int minut = int.Parse(tidOpsplittet[1]);
+
+            ////Console.WriteLine("Hvilken jordmor vil du gerne have? Indtast tallet ud fra personen");
+            ////foreach (MidWife mW in midWives)
+            ////{
+            ////    Console.WriteLine(mW.PersonId + ". " + mW.FullName);
+            ////}
+
+            int valgtMidwife = int.Parse(Console.ReadLine());
+
+            Console.WriteLine("Hvilken doktor vil du gerne have? Indtast tallet ud fra personen");
+            ////foreach (Doctor dc in doctors)
+            ////{
+            ////    Console.WriteLine(dc.PersonId + ". " + dc.FullName);
+            ////}
+
+            int valgtDoctor = int.Parse(Console.ReadLine());
+
+            ////Console.WriteLine("Du skal også have et fødselsrum reserveret, Vi finder ledige rum for dagen. \n Indtast tallet ud fra rummet");
+            ////ShowAvailableRooms(context, new DateTime(år, måned, dag, time, minut, 00), "birthroom");
+            ////int valgtRumId = int.Parse(Console.ReadLine());
+            ////Room chosenBirthRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
+
+            ////Console.WriteLine("Vil du også reservere et Maternityroom y/n");
+            ////Room chosenMaternityRoom = null;
+            ////if (Console.ReadLine().ToLower() == "y")
+            ////{
+            ////    Console.WriteLine("MaternityRoom reservation \n Indtast tallet ud fra rummet");
+            ////    ShowAvailableRooms(context, new DateTime(år, måned, dag, time, minut, 00), "maternityroom");
+            ////    valgtRumId = int.Parse(Console.ReadLine());
+            ////    chosenMaternityRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
+            ////}
+            ////Console.WriteLine("Vil du også reservere et restingroom y/n");
+            ////Room chosenRestingRoom = null;
+            ////if (Console.ReadLine().ToLower() == "y")
+            ////{
+            ////    Console.WriteLine("RestingRoom reservation \n Indtast tallet ud fra rummet");
+            ////    ShowAvailableRooms(context, new DateTime(år, måned, dag, time, minut, 00), "restingroom");
+            ////    valgtRumId = int.Parse(Console.ReadLine());
+            ////    chosenRestingRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
+            ////}
+
+            Console.WriteLine("Tak for dit info, vores super database vil nu oprette reservationen for dig");
+
+            // Følgende kode opsætter de rigtige referencer m.m. Så dataen kan gemmes på databasen
+            // Her oprettes de forskellige klasser
+            Child child1 = new Child(childName);
+            Birth birth1 = new Birth();
+            Mother mother1 = new Mother(motherName);
+            FamilyMember father1 = new FamilyMember(fatherName, "Father");
+            // Savechanges skal kaldes allerede nu, da child skal laves før birth ellers så kan EF core ikke finde ud af hvilken den skal lave først.
+            /// INSERT MANGLER MÅSKE HER
+
+            // Her sættes referencer
+            birth1.Child = child1;
+            DateTime PST = new DateTime(år, måned, dag, time, minut, 00);
+            birth1.PlannedStartTime = PST;
+            //child1.Birth = birth1;
+            child1.MotherId = mother1.PersonId;
+            child1.FamilyMembersId = new List<int>();
+            child1.FamilyMembersId.Add(father1.PersonId);
+            mother1.Children = new List<int>();
+            mother1.Children.Add(child1.PersonId);
+
+            // DOCTOR OG MIDWIFE MANGLER
+
+            ////doctors[valgtDoctor].AssociatedBirths = new List<ClinicianBirth>();
+            ////doctors[valgtDoctor].AssociatedBirths.Add(CB1);
+            ////midWives[valgtMidwife].AssociatedBirths = new List<ClinicianBirth>();
+            ////midWives[valgtMidwife].AssociatedBirths.Add(CB2);
+            ////// Her sættes clinicians på selve birth
+            ////birth1.CliniciansId = new List<int>();
+            ////birth1.CliniciansId.Add(doctors[valgtDoctor].PersonId);
+            ////birth1.CliniciansId.Add(midWives[valgtMidwife].PersonId);
+            //////
+
+
+            ////// Her sættes reservationerne for alle rum.
+            ////Reservation res1 = new Reservation();
+            ////res1.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
+            ////res1.ReservationEnd = res1.ReservationStart + TimeSpan.FromHours(5);
+            ////res1.UserId = mother1.PersonId;
+            ////res1.ReservedRoomId = chosenBirthRoom.RoomId;
+            ////mother1.ReservationsIds = new List<int>();
+            ////chosenBirthRoom.ReservationsIds = new List<int>();
+            ////mother1.ReservationsIds.Add(res1.ReservationId);
+            ////chosenBirthRoom.ReservationsIds.Add(res1.ReservationId);
+
+            ////Reservation res2 = new Reservation();
+            ////if (chosenMaternityRoom != null)
+            ////{
+            ////    res2.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
+            ////    res2.ReservationEnd = res2.ReservationStart + TimeSpan.FromDays(5);
+            ////    res2.User = mother1;
+            ////    res2.ReservedRoom = chosenMaternityRoom;
+            ////    chosenMaternityRoom.Reservations = new List<Reservation>();
+            ////    mother1.Reservations.Add(res2);
+            ////    chosenMaternityRoom.Reservations.Add(res2);
+            ////}
+
+            ////Reservation res3 = new Reservation();
+            ////if (chosenRestingRoom != null)
+            ////{
+            ////    res3.ReservationStart = new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromHours(5);
+            ////    res3.ReservationEnd = res3.ReservationStart + TimeSpan.FromHours(4);
+            ////    res3.User = mother1;
+            ////    res3.ReservedRoom = chosenRestingRoom;
+            ////    chosenRestingRoom.Reservations = new List<Reservation>();
+            ////    mother1.Reservations.Add(res3);
+            ////    chosenRestingRoom.Reservations.Add(res3);
+            ////}
+            ////// Alt gemmes og reservationen er gemmenført
+            ////context.SaveChanges();
+
+            ////Console.WriteLine($"Reservation til den {dato}, med personerne {childName}, {motherName} og {fatherName} er gennemført og gemt");
+
+
+
+
+        }
     }
 
 }
