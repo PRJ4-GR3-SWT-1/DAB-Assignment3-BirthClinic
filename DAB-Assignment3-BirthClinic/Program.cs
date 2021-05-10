@@ -17,6 +17,7 @@ namespace DAB_Assignment3_BirthClinic
         private static IMongoCollection<Person> collectionOtherPersons;
         private static IMongoCollection<Room> collectionRooms;
         private static IMongoCollection<Reservation> collectionReservations;
+        private static bool _running;
 
 
         static void Main(string[] args)
@@ -31,7 +32,7 @@ namespace DAB_Assignment3_BirthClinic
             collectionOtherPersons = database.GetCollection<Person>("OtherPersons");
             collectionRooms = database.GetCollection<Room>("Rooms");
             collectionReservations = database.GetCollection<Reservation>("Reservations");
-            bool _running = true;
+            _running = true;
             while (_running)
             {
                 Console.WriteLine("Muligheder: ");
@@ -164,7 +165,7 @@ namespace DAB_Assignment3_BirthClinic
                     //ShowRoomsAndClinicianReservedForBirth(context);
                     break;
                 case ConsoleKey.X:
-                    //_running = false;
+                    _running = false;
                     break;
                 case ConsoleKey.F:
                     //FinnishRoomReservation(context);
@@ -176,7 +177,7 @@ namespace DAB_Assignment3_BirthClinic
                     //CancelRoomReservation(context);
                     break;
                 case ConsoleKey.S:
-                    new SeedData(collectionRooms,collectionOtherPersons);
+                    new SeedData(collectionRooms,collectionClinicians);
                     break;
                 default:
                     Console.WriteLine("Ugyldigt valg");
