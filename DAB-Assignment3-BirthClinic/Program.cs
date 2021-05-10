@@ -12,6 +12,13 @@ namespace DAB_Assignment3_BirthClinic
 {
     class Program
     {
+        private static IMongoCollection<Birth> collectionBirths;
+        private static IMongoCollection<Clinician> collectionClinicians;
+        private static IMongoCollection<Person> collectionOtherPersons;
+        private static IMongoCollection<Room> collectionRooms;
+        private static IMongoCollection<Reservation> collectionReservations;
+
+
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
@@ -19,11 +26,11 @@ namespace DAB_Assignment3_BirthClinic
                 "mongodb://localhost:27017"
             );
             var database = client.GetDatabase("BirthClinic");
-            var collectionBirths = database.GetCollection<BsonDocument>("Births");
-            var collectionClinicians = database.GetCollection<BsonDocument>("Clinicians");
-            var collectionOtherPersons = database.GetCollection<BsonDocument>("OtherPersons");
-            var collectionRooms = database.GetCollection<BsonDocument>("Rooms");
-            var collectionReservations = database.GetCollection<BsonDocument>("Reservations");
+            collectionBirths = database.GetCollection<Birth>("Births");
+            collectionClinicians = database.GetCollection<Clinician>("Clinicians");
+            collectionOtherPersons = database.GetCollection<Person>("OtherPersons");
+            collectionRooms = database.GetCollection<Room>("Rooms");
+            collectionReservations = database.GetCollection<Reservation>("Reservations");
             bool _running = true;
             while (_running)
             {
@@ -71,17 +78,17 @@ namespace DAB_Assignment3_BirthClinic
                 testMother.Children.Add(testChild.PersonId);
 
                 // Her kan vi instedet bruge insert many
-                collectionOtherPersons.InsertOne(BsonDocument.Parse(JsonSerializer.Serialize(testChild)));
-                collectionOtherPersons.InsertOne(BsonDocument.Parse(JsonSerializer.Serialize(testFather)));
-                collectionOtherPersons.InsertOne(BsonDocument.Parse(JsonSerializer.Serialize(testMother)));
+                collectionOtherPersons.InsertOne(testChild);
+                collectionOtherPersons.InsertOne(testFather);
+                collectionOtherPersons.InsertOne(testMother);
             // God ide at kalde dispose efter hver insert. Ellers hvis der sker fejl undervejs, så vil Id'er ikke være helt korrekte.
             GlobalNumbers.Instance.Dispose();
 
                 Clinician testClinician = new Doctor("TheDoctor");
                 Clinician testClinician2 = new MidWife("TheMidwife");
 
-            collectionClinicians.InsertOne(BsonDocument.Parse(JsonSerializer.Serialize(testClinician)));
-            collectionClinicians.InsertOne(BsonDocument.Parse(JsonSerializer.Serialize(testClinician2)));
+            collectionClinicians.InsertOne(testClinician);
+            collectionClinicians.InsertOne(testClinician2);
             GlobalNumbers.Instance.Dispose();
 
             DateTime testTime = new DateTime(2021, 06, 05);
@@ -95,7 +102,7 @@ namespace DAB_Assignment3_BirthClinic
 
                 BsonDocument output = BsonDocument.Parse(JsonSerializer.Serialize(testBirth));
 
-                collectionBirths.InsertOne(output);
+                collectionBirths.InsertOne(testBirth);
                 GlobalNumbers.Instance.Dispose();
                 Console.WriteLine(output);
 
@@ -169,7 +176,7 @@ namespace DAB_Assignment3_BirthClinic
                     //CancelRoomReservation(context);
                     break;
                 case ConsoleKey.S:
-                    //SeedData(RoomCollection, PersonCollection);
+                    new SeedData(collectionRooms,collectionOtherPersons);
                     break;
                 default:
                     Console.WriteLine("Ugyldigt valg");
