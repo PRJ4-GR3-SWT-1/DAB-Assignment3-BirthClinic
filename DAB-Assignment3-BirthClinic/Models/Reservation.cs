@@ -4,7 +4,7 @@ namespace DAB_Assignment3_BirthClinic.Models
 {
     public class Reservation
     {
-        Reservation()
+        public Reservation()
         {
             ReservationId = GlobalNumbers.Instance.getReservationId();
         }

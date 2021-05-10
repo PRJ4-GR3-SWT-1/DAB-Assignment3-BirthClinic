@@ -41,9 +41,9 @@ namespace DAB_Assignment3_BirthClinic.Models
 
         public Clinician(string FullName, string type) : base(FullName,type)
         {
-            //  AssociatedBirths = new List<ClinicianBirth>();
+              AssociatedBirthsId = new List<int>();
         }
-        public List<ClinicianBirth> AssociatedBirths { get; set; }
+        public List<int> AssociatedBirthsId { get; set; }
     }
     public class Secretary : Clinician
     {
