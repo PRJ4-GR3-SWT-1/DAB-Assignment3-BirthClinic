@@ -9,7 +9,7 @@ namespace DAB_Assignment3_BirthClinic.Models
 {
     public abstract class Person
     {
-        protected Person(string name)
+        protected Person(string name, string type)
         {
             FullName = name;
         }
@@ -17,12 +17,13 @@ namespace DAB_Assignment3_BirthClinic.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public ObjectId _id { get; set; }
         public string FullName { get; set; }
-        
+        public string Type { get; set; }
+
     }
 
     public class Child : Person
     {
-        public Child(string FullName) : base(FullName)
+        public Child(string FullName) : base(FullName,"Child")
         {
 
         }
@@ -34,10 +35,9 @@ namespace DAB_Assignment3_BirthClinic.Models
 
     public class Clinician:Person
     {
-        public string Type;
-        public Clinician(string FullName, string type) : base(FullName)
+
+        public Clinician(string FullName, string type) : base(FullName,type)
         {
-            Type = type;
             //  AssociatedBirths = new List<ClinicianBirth>();
         }
         public List<ClinicianBirth> AssociatedBirths { get; set; }
