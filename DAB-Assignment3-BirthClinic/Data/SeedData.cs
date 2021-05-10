@@ -264,10 +264,10 @@ namespace BirthClinicLibrary.Data
             #endregion
 
             #region Secretary
-            Person s1 = new Secretary("Susan");
-            Person s2 = new Secretary("Simon");
-            Person s3 = new Secretary("Sam");
-            Person s4 = new Secretary("Susanne");
+            Clinician s1 = new Secretary("Susan");
+            Clinician s2 = new Secretary("Simon");
+            Clinician s3 = new Secretary("Sam");
+            Clinician s4 = new Secretary("Susanne");
 
             clinicians.Add(s1);
             clinicians.Add(s2);
