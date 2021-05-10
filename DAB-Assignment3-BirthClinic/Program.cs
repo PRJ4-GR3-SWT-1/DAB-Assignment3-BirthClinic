@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text.Json;
+using BirthClinicLibrary.Data;
 using DAB_Assignment3_BirthClinic.Models;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
@@ -23,27 +24,45 @@ namespace DAB_Assignment3_BirthClinic
             var collectionClinicians = database.GetCollection<BsonDocument>("Clinicians");
             var collectionOtherPersons = database.GetCollection<BsonDocument>("OtherPersons");
             var globalNumbers = database.GetCollection<BsonDocument>("GlobalNumbers");
+            bool _running = true;
+
+            while (_running)
+            {
+                Console.WriteLine("Muligheder: ");
+                Console.WriteLine("1: Vis planlagte fødsler: ");
+                Console.WriteLine("2: Ledige rum og klinikarbejdere ");
+                Console.WriteLine("3: Aktuelt igangværende fødsler ");
+                Console.WriteLine("4: Værelser i brug lige nu (ikke fødselsrum)");
+                Console.WriteLine("5: Vis reserverede rum og associeret personale til specifik fødsel");
+                Console.WriteLine("F: Færdiggør reservation af rum ");
+                Console.WriteLine("B: Lav en reservation til en fødsel");
+                Console.WriteLine("A: Annuller reservation af rum ");
+                Console.WriteLine("S: Seed data til databasen ");
+                Console.WriteLine("x: Luk ");
+                var key = Console.ReadKey();
+                HandleKey(key);
+            }
 
 
 
-           
 
 
 
-                //var doc = new BsonDocument()
-                //{
-                //    {"Name", "Hugo"}
-                //};
-                //collection.InsertOne(doc);
 
-                //var dblist = client.ListDatabases().ToList();
-                //foreach (var db in dblist)
-                //{
-                //    Console.WriteLine(db);
-                //}
-                //Console.WriteLine("\n\n");
+            //var doc = new BsonDocument()
+            //{
+            //    {"Name", "Hugo"}
+            //};
+            //collection.InsertOne(doc);
 
-                Birth testBirth = new Birth();
+            //var dblist = client.ListDatabases().ToList();
+            //foreach (var db in dblist)
+            //{
+            //    Console.WriteLine(db);
+            //}
+            //Console.WriteLine("\n\n");
+
+            Birth testBirth = new Birth();
                 Child testChild = new Child("TheChild");
                 Mother testMother = new Mother("TheMother");
                 FamilyMember testFather = new FamilyMember("TheFather", "Father");
@@ -51,6 +70,7 @@ namespace DAB_Assignment3_BirthClinic
                 testChild.MotherId = testMother.id;
                 // Vi kunne også gøre children til Id'er. IDK
                 testMother.Children.Add(testChild);
+                
 
                 // Her kan vi instedet bruge insert many
                 collectionOtherPersons.InsertOne(BsonDocument.Parse(JsonSerializer.Serialize(testChild)));
@@ -73,6 +93,7 @@ namespace DAB_Assignment3_BirthClinic
                 testBirth.CliniciansId.Add(testClinician.id);
                 testBirth.CliniciansId.Add(testClinician2.id);
                 testBirth.PlannedStartTime = testTime;
+                
 
                 BsonDocument output = BsonDocument.Parse(JsonSerializer.Serialize(testBirth));
 
@@ -112,5 +133,52 @@ namespace DAB_Assignment3_BirthClinic
         // Men hvordan laves dette id nemmest, og mest korrekt.
         // MÅSKE SKAL VI HAVE ET _id I ALLE KLASSER SOM SÅ BRUGER GLOBALNUMBERS, DERVED SIGER VI SCREW YOU TIL MONGODBS ID'ER SOM IKKE GØR ANDET END AT IRRITERE.
         // Enten skal vi have en collection for hvert slags rum/person osv. ellers så skal vi have en collection som fx hedder persons, som så har arrays af Clinicians, et array af mothers osv.
+
+        private static void HandleKey(ConsoleKeyInfo key)
+        {
+            switch (key.Key)
+            {
+                case ConsoleKey.D1:
+                case ConsoleKey.NumPad1:
+                    //ShowPlannedBirths(context);
+                    break;
+                case ConsoleKey.D2:
+                case ConsoleKey.NumPad2:
+                    //ShowAvailableRoomsAndClinicians(context);
+                    break;
+                case ConsoleKey.D3:
+                case ConsoleKey.NumPad3:
+                    //ShowOngoingBirths(context);
+                    break;
+                case ConsoleKey.D4:
+                case ConsoleKey.NumPad4:
+                    //ShowMaternityRoomsAndRestingRoomsInUse(context);
+                    break;
+                case ConsoleKey.D5:
+                case ConsoleKey.NumPad5:
+                    //ShowRoomsAndClinicianReservedForBirth(context);
+                    break;
+                case ConsoleKey.X:
+                    //_running = false;
+                    break;
+                case ConsoleKey.F:
+                    //FinnishRoomReservation(context);
+                    break;
+                case ConsoleKey.B:
+                    //AddBirth(context);
+                    break;
+                case ConsoleKey.A:
+                    //CancelRoomReservation(context);
+                    break;
+                case ConsoleKey.S:
+                    SeedData(context);
+                    break;
+                default:
+                    Console.WriteLine("Ugyldigt valg");
+                    break;
+            }
+        }
+
     }
+
 }
