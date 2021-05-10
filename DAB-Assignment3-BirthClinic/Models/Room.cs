@@ -8,12 +8,14 @@ namespace DAB_Assignment3_BirthClinic.Models
         public Room(string roomName, string type)
         {
             RoomName = roomName;
-            Reservations = new List<Reservation>();
+            ReservationsIds = new List<int>();
+            RoomId = GlobalNumbers.Instance.getRoomId();
+            Type = type;
         }
         public int RoomId { get; set; }
         public string Type;
         public string RoomName { get; set; }
-        public ICollection<Reservation> Reservations { get; set; }
+        public ICollection<int> ReservationsIds { get; set; }
 
     }
 

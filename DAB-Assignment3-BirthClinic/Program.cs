@@ -18,39 +18,39 @@ namespace DAB_Assignment3_BirthClinic
                 "mongodb://localhost:27017"
             );
             var database = client.GetDatabase("BirthClinic");
-            //var collection = database.GetCollection<BsonDocument>("Clinicians");
-            var collection = database.GetCollection<BsonDocument>("Births");
+            var collectionBirths = database.GetCollection<BsonDocument>("Births");
             var collectionClinicians = database.GetCollection<BsonDocument>("Clinicians");
             var collectionOtherPersons = database.GetCollection<BsonDocument>("OtherPersons");
-            var globalNumbers = database.GetCollection<BsonDocument>("GlobalNumbers");
+            var collectionRooms = database.GetCollection<BsonDocument>("Rooms");
+            var collectionReservations = database.GetCollection<BsonDocument>("Reservations");
 
 
 
-           
 
 
 
-                //var doc = new BsonDocument()
-                //{
-                //    {"Name", "Hugo"}
-                //};
-                //collection.InsertOne(doc);
 
-                //var dblist = client.ListDatabases().ToList();
-                //foreach (var db in dblist)
-                //{
-                //    Console.WriteLine(db);
-                //}
-                //Console.WriteLine("\n\n");
+            //var doc = new BsonDocument()
+            //{
+            //    {"Name", "Hugo"}
+            //};
+            //collection.InsertOne(doc);
 
-                Birth testBirth = new Birth();
+            //var dblist = client.ListDatabases().ToList();
+            //foreach (var db in dblist)
+            //{
+            //    Console.WriteLine(db);
+            //}
+            //Console.WriteLine("\n\n");
+
+            Birth testBirth = new Birth();
                 Child testChild = new Child("TheChild");
                 Mother testMother = new Mother("TheMother");
                 FamilyMember testFather = new FamilyMember("TheFather", "Father");
-                testChild.FamilyMembersId.Add(testFather.id);
-                testChild.MotherId = testMother.id;
+                testChild.FamilyMembersId.Add(testFather.PersonId);
+                testChild.MotherId = testMother.PersonId;
                 // Vi kunne også gøre children til Id'er. IDK
-                testMother.Children.Add(testChild);
+                testMother.Children.Add(testChild.PersonId);
 
                 // Her kan vi instedet bruge insert many
                 collectionOtherPersons.InsertOne(BsonDocument.Parse(JsonSerializer.Serialize(testChild)));
@@ -70,13 +70,13 @@ namespace DAB_Assignment3_BirthClinic
                 
                 // Child er ikke et Id pt, det kan vi altid gøre så det bliver.
                 testBirth.Child = testChild;
-                testBirth.CliniciansId.Add(testClinician.id);
-                testBirth.CliniciansId.Add(testClinician2.id);
+                testBirth.CliniciansId.Add(testClinician.PersonId);
+                testBirth.CliniciansId.Add(testClinician2.PersonId);
                 testBirth.PlannedStartTime = testTime;
 
                 BsonDocument output = BsonDocument.Parse(JsonSerializer.Serialize(testBirth));
 
-                collection.InsertOne(output);
+                collectionBirths.InsertOne(output);
                 GlobalNumbers.Instance.Dispose();
                 Console.WriteLine(output);
 
