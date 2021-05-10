@@ -11,11 +11,11 @@ namespace DAB_Assignment3_BirthClinic.Models
     {
         protected Person(string name)
         {
-            id = GlobalNumbers.Instance.getPersonId();
             FullName = name;
         }
-
-        public int id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId _id { get; set; }
         public string FullName { get; set; }
         
     }
@@ -24,13 +24,10 @@ namespace DAB_Assignment3_BirthClinic.Models
     {
         public Child(string FullName) : base(FullName)
         {
-            FamilyMembersId = new List<int>();
-        }
 
-        public int MotherId { get; set; }
-       // public Mother Mother { get; set; }
-        //public List<FamilyMember> FamilyMembers { get; set; }
-        public List<int> FamilyMembersId { get; set; }
+        }
+        public Mother Mother { get; set; }
+        public List<FamilyMember> FamilyMembers { get; set; }
         public DateTime Birthday { get; set; }
 
     }
