@@ -40,13 +40,9 @@ namespace DAB_Assignment3_BirthClinic
             {
                 Console.WriteLine("Muligheder: ");
                 Console.WriteLine("1: Vis planlagte fødsler de næste 3 dage: ");
-                Console.WriteLine("2: Ledige rum og klinikarbejdere ");
                 Console.WriteLine("3: Aktuelt igangværende fødsler ");
-                Console.WriteLine("4: Værelser i brug lige nu (ikke fødselsrum)");
                 Console.WriteLine("5: Vis reserverede rum og associeret personale til specifik fødsel");
-                Console.WriteLine("F: Færdiggør reservation af rum ");
                 Console.WriteLine("B: Lav en reservation til en fødsel");
-                Console.WriteLine("A: Annuller reservation af rum ");
                 Console.WriteLine("S: Seed data til databasen ");
                 Console.WriteLine("x: Luk ");
                 var key = Console.ReadKey();
@@ -151,18 +147,12 @@ namespace DAB_Assignment3_BirthClinic
                 case ConsoleKey.NumPad1:
                     ShowPlannedBirthsNext3Days();
                     break;
-                case ConsoleKey.D2:
-                case ConsoleKey.NumPad2:
-                    //ShowAvailableRoomsAndClinicians(context);
-                    break;
+               
                 case ConsoleKey.D3:
                 case ConsoleKey.NumPad3:
                     ShowOngoingBirths();
                     break;
-                case ConsoleKey.D4:
-                case ConsoleKey.NumPad4:
-                    //ShowMaternityRoomsAndRestingRoomsInUse(context);
-                    break;
+                
                 case ConsoleKey.D5:
                 case ConsoleKey.NumPad5:
                     ShowRoomsAndCliniciansWbirth();
@@ -170,15 +160,11 @@ namespace DAB_Assignment3_BirthClinic
                 case ConsoleKey.X:
                     _running = false;
                     break;
-                case ConsoleKey.F:
-                    //FinnishRoomReservation(context);
-                    break;
+                
                 case ConsoleKey.B:
-                    //AddBirth(context);
+                    AddBirth();
                     break;
-                case ConsoleKey.A:
-                    //CancelRoomReservation(context);
-                    break;
+                
                 case ConsoleKey.S:
                     new SeedData(collectionRooms, collectionClinicians);
                     break;
