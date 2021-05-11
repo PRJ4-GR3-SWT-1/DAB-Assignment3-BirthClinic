@@ -425,7 +425,7 @@ namespace DAB_Assignment3_BirthClinic
             Console.WriteLine("\nPlanned births the next 3 days:");
             foreach (var b in births)
             {
-                Console.WriteLine("👶 BirthId: " + b.id + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName+".");
+                Console.WriteLine("👶 BirthId: " + b.BirthId + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName+".");
             }
         }
 
@@ -438,8 +438,7 @@ namespace DAB_Assignment3_BirthClinic
             Console.WriteLine("\nOngoing Births (Births with a starttime in the last 5 hours)");
             foreach (var b in births)
             {
-                Console.WriteLine("BirthId: " + b.id + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName +".");
-                Console.WriteLine("BirthId: " + b.BirthId + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
+                Console.WriteLine("BirthId: " + b.BirthId + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName +".");
             }
         }
     }
