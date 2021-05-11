@@ -111,15 +111,12 @@ namespace DAB_Assignment3_BirthClinic
 
 
             // MUST BE AS THE LAST LINE
+            // This Updates the GlobalNumbers document, so the ids are correct
             GlobalNumbers.Instance.Dispose();
         }
 
-        // Opdel databasen i Person, Birth og reservation og rooms. 
-        // Person kan indeholde et array af details, som bruges til at fortælle om personen er en clinician, barn, familiemedlem m.m.
-        //
-
         // 1. View
-        //Show planned births for the comingthreedays
+        //Show planned births for the coming three days
 
 
         // 3. View
@@ -130,15 +127,6 @@ namespace DAB_Assignment3_BirthClinic
         //Given a birth can planned
         //    a) Show the rooms reserved the birth
         //    b) Show the clinicians assigned the birth
-
-
-
-        //HELP
-        // Hvordan skal vores documenter få deres id?, Igennem _id eller skal vi lave et globalt dokument med Id'er? Eller begge?
-        // Ved fx birth vil vi ikke have nye objekter af fx clinicians, men i stedet have et array af deres Id'er. Derved kan der nemt søges på dem.
-        // Men hvordan laves dette id nemmest, og mest korrekt.
-        // MÅSKE SKAL VI HAVE ET _id I ALLE KLASSER SOM SÅ BRUGER GLOBALNUMBERS, DERVED SIGER VI SCREW YOU TIL MONGODBS ID'ER SOM IKKE GØR ANDET END AT IRRITERE.
-        // Enten skal vi have en collection for hvert slags rum/person osv. ellers så skal vi have en collection som fx hedder persons, som så har arrays af Clinicians, et array af mothers osv.
 
         private static void HandleKey(ConsoleKeyInfo key)
         {
@@ -178,7 +166,6 @@ namespace DAB_Assignment3_BirthClinic
         public static void AddBirth()
         {
             // Til når brugeren skal vælge doctor og midwife.
-            //var doctorFilter = Builders<Clinician>.Filter.All("Type", "Doctor");
             List<Clinician> doctors = collectionClinicians.Find(r => r.Type == "Doctor").ToList();
             List<Clinician> midWives = collectionClinicians.Find(r => r.Type == "MidWife").ToList();
 
@@ -258,22 +245,19 @@ namespace DAB_Assignment3_BirthClinic
             Birth birth1 = new Birth();
             Mother mother1 = new Mother(motherName);
             FamilyMember father1 = new FamilyMember(fatherName, "Father");
-            // Savechanges skal kaldes allerede nu, da child skal laves før birth ellers så kan EF core ikke finde ud af hvilken den skal lave først.
-            /// INSERT MANGLER MÅSKE HER
 
             // Her sættes referencer
+            // Mother, child, father and birth
             birth1.Child = child1;
             DateTime PST = new DateTime(år, måned, dag, time, minut, 00,DateTimeKind.Utc);
             birth1.PlannedStartTime = PST;
-            //child1.Birth = birth1;
             child1.Mother = mother1;
             child1.FamilyMembersId = new List<int>();
             child1.FamilyMembersId.Add(father1.PersonId);
             mother1.Children = new List<int>();
             mother1.Children.Add(child1.PersonId);
 
-            // DOCTOR OG MIDWIFE MANGLER
-
+            // Clinicians references
             doctors[valgtDoctor].AssociatedBirthsId = new List<int>();
             doctors[valgtDoctor].AssociatedBirthsId.Add(birth1.BirthId);
             midWives[valgtMidwife].AssociatedBirthsId = new List<int>();
@@ -282,8 +266,6 @@ namespace DAB_Assignment3_BirthClinic
             birth1.CliniciansId = new List<int>();
             birth1.CliniciansId.Add(doctors[valgtDoctor].PersonId);
             birth1.CliniciansId.Add(midWives[valgtMidwife].PersonId);
-            //
-
 
             // Her sættes reservationerne for alle rum.
             Reservation res1 = new Reservation();
@@ -323,13 +305,8 @@ namespace DAB_Assignment3_BirthClinic
             // Insert
             collectionBirths.InsertOne(birth1);
             // Mother and child can be found under the specific birth
-            //collectionOtherPersons.InsertOne(child1);
-            //collectionOtherPersons.InsertOne(mother1);
             collectionOtherPersons.InsertOne(father1);
             
-            //collectionReservations.InsertOne(res1);
-            //if(chosenMaternityRoom != null) collectionReservations.InsertOne(res2);
-            //if(chosenRestingRoom != null) collectionReservations.InsertOne(res3);
             // Update Clinicians
             var doctorfilter = Builders<Clinician>.Filter.Eq("PersonId", doctors[valgtDoctor].PersonId);
             var doctorUpdate = Builders<Clinician>.Update.Push("AssociatedBirthsId", birth1.BirthId);
