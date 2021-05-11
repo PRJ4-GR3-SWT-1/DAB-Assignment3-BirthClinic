@@ -58,11 +58,11 @@ namespace DAB_Assignment3_BirthClinic.Models
     {
         public Mother(string FullName) :base(FullName,"Mother")
         {
-            ReservationsIds = new List<int>();
+            Reservations = new List<Reservation>();
             Children = new List<int>();
         }
         public List<int> Children { get; set; }
-        public ICollection<int> ReservationsIds { get; set; }
+        public ICollection<Reservation> Reservations { get; set; }
     }
 
     public class FamilyMember : Person
