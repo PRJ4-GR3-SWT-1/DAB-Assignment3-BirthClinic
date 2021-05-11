@@ -399,7 +399,7 @@ namespace DAB_Assignment3_BirthClinic
                 return;
             }
 
-            Console.WriteLine("Name: " + birth.Child.FullName+ " mother: "+ birth.Child.Mother.FullName);
+            Console.WriteLine("Name: " + birth.Child.FullName+ " mother: "+ birth.Child.Mother.FullName +" Planned to start " + birth.PlannedStartTime.ToString("F"));
 
             //Find clinicians:
             Console.WriteLine("Associated clinicians: ");
@@ -414,7 +414,7 @@ namespace DAB_Assignment3_BirthClinic
             foreach (var res in birth.Child.Mother.Reservations)
             {
                 var room = collectionRooms.Find(r => r.RoomId == res.ReservedRoomId).Single();
-                Console.WriteLine(" " + room.RoomName + " med id: " + room.RoomId);
+                Console.WriteLine(" " + room.RoomName + " ("+room.Type+ ") med id: " + room.RoomId);
             }
 
         }
@@ -427,7 +427,7 @@ namespace DAB_Assignment3_BirthClinic
             Console.WriteLine("\nPlanned births the next 3 days:");
             foreach (var b in births)
             {
-                Console.WriteLine("👶 BirthId: " + b.BirthId + " Child: " + b.Child.FullName + " Mother: " + b.Child.Mother.FullName);
+                Console.WriteLine("👶 BirthId: " + b.BirthId + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName+".");
             }
         }
 
@@ -440,7 +440,7 @@ namespace DAB_Assignment3_BirthClinic
             Console.WriteLine("\nOngoing Births (Births with a starttime in the last 5 hours)");
             foreach (var b in births)
             {
-                Console.WriteLine("BirthId: " + b.BirthId + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
+                Console.WriteLine("BirthId: " + b.BirthId + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName +".");
             }
         }
     }
