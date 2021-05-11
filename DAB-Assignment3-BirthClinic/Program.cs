@@ -261,7 +261,7 @@ namespace DAB_Assignment3_BirthClinic
 
             // Her sættes referencer
             birth1.Child = child1;
-            DateTime PST = new DateTime(år, måned, dag, time, minut, 00);
+            DateTime PST = new DateTime(år, måned, dag, time, minut, 00,DateTimeKind.Local);
             birth1.PlannedStartTime = PST;
             //child1.Birth = birth1;
             child1.Mother = mother1;
@@ -425,7 +425,7 @@ namespace DAB_Assignment3_BirthClinic
             Console.WriteLine("\nPlanned births the next 3 days:");
             foreach (var b in births)
             {
-                Console.WriteLine("BirthId: " + b.BirthId + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
+                Console.WriteLine("👶 BirthId: " + b.BirthId + " Child: " + b.Child.FullName + " Mother: " + b.Child.Mother.FullName);
             }
         }
 
