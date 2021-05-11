@@ -23,6 +23,8 @@ namespace DAB_Assignment3_BirthClinic.Models
         
        // public List<Clinician> Clinicians { get; set; }
        public List<int> CliniciansId { get; set; }
+       [BsonElement]
+       [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime PlannedStartTime { get; set; }
     }
 }

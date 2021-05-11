@@ -38,6 +38,8 @@ namespace DAB_Assignment3_BirthClinic
 
             while (_running)
             {
+                Console.WriteLine("CurrentTime: " +DateTime.Now);
+
                 Console.WriteLine("Muligheder: ");
                 Console.WriteLine("1: Vis planlagte fødsler de næste 3 dage: ");
                 Console.WriteLine("3: Aktuelt igangværende fødsler ");
@@ -296,7 +298,7 @@ namespace DAB_Assignment3_BirthClinic
                 bool roomAlreadyReserved = false;
                 foreach (var res in room.Reservations)
                 {
-                    if (res.ReservationEnd <= starttime|| res.ReservationStart >= endTime) continue;
+                    if (res.ReservationEnd <= starttime || res.ReservationStart >= endTime) continue;
                     else roomAlreadyReserved = true;
                 }
                 if (roomAlreadyReserved == false) Console.WriteLine(room.Type+": "+room.RoomId + " is available");
@@ -344,12 +346,12 @@ namespace DAB_Assignment3_BirthClinic
         public static void ShowPlannedBirthsNext3Days()
         {
             var births = collectionBirths.Find(b =>
-                b.PlannedStartTime < DateTime.UtcNow + TimeSpan.FromDays(3)
-                && b.PlannedStartTime > DateTime.UtcNow).ToList();
+                b.PlannedStartTime < DateTime.Now + TimeSpan.FromHours(2) + TimeSpan.FromDays(3)
+                && b.PlannedStartTime > DateTime.Now + TimeSpan.FromHours(2)).ToList();
             Console.WriteLine("\nPlanned births the next 3 days:");
             foreach (var b in births)
             {
-                Console.WriteLine("👶 BirthId: " + b.BirthId + " Child: " + b.Child.FullName + " Mother: " + b.Child.Mother.FullName);
+                Console.WriteLine("👶 BirthId: " + b.BirthId + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName+".");
             }
         }
 
@@ -357,12 +359,12 @@ namespace DAB_Assignment3_BirthClinic
         public static void ShowOngoingBirths()
         {
             var births = collectionBirths.Find(b =>
-                b.PlannedStartTime < DateTime.UtcNow 
-                && b.PlannedStartTime > DateTime.UtcNow-TimeSpan.FromHours(5)).ToList();
+                (b.PlannedStartTime < DateTime.Now+TimeSpan.FromHours(2)) 
+                && (b.PlannedStartTime > (DateTime.Now + TimeSpan.FromHours(2) - TimeSpan.FromHours(5)))).ToList();
             Console.WriteLine("\nOngoing Births (Births with a starttime in the last 5 hours)");
             foreach (var b in births)
             {
-                Console.WriteLine("BirthId: " + b.BirthId + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
+                Console.WriteLine("BirthId: " + b.BirthId + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName +".");
             }
         }
     }
