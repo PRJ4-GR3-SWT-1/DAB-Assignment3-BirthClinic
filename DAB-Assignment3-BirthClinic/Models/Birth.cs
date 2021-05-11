@@ -13,8 +13,9 @@ namespace DAB_Assignment3_BirthClinic.Models
             BirthId = GlobalNumbers.Instance.getBirthId();
             CliniciansId = new List<int>();
         }
-
-        public int id { get; set; }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId _id { get; set; }
         public int BirthId { get; set; }
         public Child Child { get; set; }
 
