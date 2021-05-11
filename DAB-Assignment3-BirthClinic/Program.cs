@@ -225,7 +225,7 @@ namespace DAB_Assignment3_BirthClinic
             int valgtDoctor = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Du skal også have et fødselsrum reserveret, Vi finder ledige rum for dagen. \n Indtast tallet ud fra rummet");
-            var birthrooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), new DateTime(år, måned, dag, time, minut, 00)+TimeSpan.FromHours(5), "BirthRoom");
+            var birthrooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc), new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) +TimeSpan.FromHours(5), "BirthRoom");
             int valgtRumId = int.Parse(Console.ReadLine());
             Room chosenBirthRoom = birthrooms.Find(r => r.RoomId == valgtRumId);
 
@@ -234,7 +234,7 @@ namespace DAB_Assignment3_BirthClinic
             if (Console.ReadLine().ToLower() == "y")
             {
                 Console.WriteLine("MaternityRoom reservation \n Indtast tallet ud fra rummet");
-                var maternityRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromDays(5), "Maternity Room");
+                var maternityRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc), new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) + TimeSpan.FromDays(5), "Maternity Room");
                 valgtRumId = int.Parse(Console.ReadLine());
                 chosenMaternityRoom = maternityRooms.Find(r => r.RoomId == valgtRumId);
             }
@@ -243,7 +243,7 @@ namespace DAB_Assignment3_BirthClinic
             if (Console.ReadLine().ToLower() == "y")
             {
                 Console.WriteLine("RestingRoom reservation \n Indtast tallet ud fra rummet"); 
-                var restingRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromHours(4), "Resting Room");
+                var restingRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc), new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) + TimeSpan.FromHours(4), "Resting Room");
                 valgtRumId = int.Parse(Console.ReadLine());
                 chosenRestingRoom = restingRooms.Find(r => r.RoomId == valgtRumId);
             }
@@ -261,7 +261,7 @@ namespace DAB_Assignment3_BirthClinic
 
             // Her sættes referencer
             birth1.Child = child1;
-            DateTime PST = new DateTime(år, måned, dag, time, minut, 00,DateTimeKind.Local);
+            DateTime PST = new DateTime(år, måned, dag, time, minut, 00,DateTimeKind.Utc);
             birth1.PlannedStartTime = PST;
             //child1.Birth = birth1;
             child1.Mother = mother1;
@@ -285,7 +285,7 @@ namespace DAB_Assignment3_BirthClinic
 
             // Her sættes reservationerne for alle rum.
             Reservation res1 = new Reservation();
-            res1.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
+            res1.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc);
             res1.ReservationEnd = res1.ReservationStart + TimeSpan.FromHours(5);
             res1.UserId = mother1.PersonId;
             res1.ReservedRoomId = chosenBirthRoom.RoomId;
@@ -297,7 +297,7 @@ namespace DAB_Assignment3_BirthClinic
             Reservation res2 = new Reservation();
             if (chosenMaternityRoom != null)
             {
-                res2.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
+                res2.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc);
                 res2.ReservationEnd = res2.ReservationStart + TimeSpan.FromDays(5);
                 res2.UserId = mother1.PersonId;
                 res2.ReservedRoomId = chosenMaternityRoom.RoomId;
@@ -309,7 +309,7 @@ namespace DAB_Assignment3_BirthClinic
             Reservation res3 = new Reservation();
             if (chosenRestingRoom != null)
             {
-                res3.ReservationStart = new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromHours(5);
+                res3.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) + TimeSpan.FromHours(5);
                 res3.ReservationEnd = res3.ReservationStart + TimeSpan.FromHours(4);
                 res3.UserId = mother1.PersonId;
                 res3.ReservedRoomId = chosenRestingRoom.RoomId;
