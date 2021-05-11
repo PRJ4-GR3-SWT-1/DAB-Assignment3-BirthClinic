@@ -320,12 +320,14 @@ namespace DAB_Assignment3_BirthClinic
             // Alt gemmes og reservationen er gemmenført
             // Insert
             collectionBirths.InsertOne(birth1);
-            collectionOtherPersons.InsertOne(child1);
-            collectionOtherPersons.InsertOne(mother1);
+            // Mother and child can be found under the specific birth
+            //collectionOtherPersons.InsertOne(child1);
+            //collectionOtherPersons.InsertOne(mother1);
             collectionOtherPersons.InsertOne(father1);
-            collectionReservations.InsertOne(res1);
-            collectionReservations.InsertOne(res2);
-            collectionReservations.InsertOne(res3);
+            
+            //collectionReservations.InsertOne(res1);
+            //if(chosenMaternityRoom != null) collectionReservations.InsertOne(res2);
+            //if(chosenRestingRoom != null) collectionReservations.InsertOne(res3);
             // Update Clinicians
             var doctorfilter = Builders<Clinician>.Filter.Eq("PersonId", doctors[valgtDoctor].PersonId);
             var doctorUpdate = Builders<Clinician>.Update.Push("AssociatedBirthsId", birth1.BirthId);
@@ -423,7 +425,7 @@ namespace DAB_Assignment3_BirthClinic
             Console.WriteLine("\nPlanned births the next 3 days:");
             foreach (var b in births)
             {
-                Console.WriteLine("BirthId: " + b.id + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
+                Console.WriteLine("BirthId: " + b.BirthId + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
             }
         }
 
@@ -436,7 +438,7 @@ namespace DAB_Assignment3_BirthClinic
             Console.WriteLine("\nOngoing Births (Births with a starttime in the last 5 hours)");
             foreach (var b in births)
             {
-                Console.WriteLine("BirthId: " + b.id + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
+                Console.WriteLine("BirthId: " + b.BirthId + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
             }
         }
     }

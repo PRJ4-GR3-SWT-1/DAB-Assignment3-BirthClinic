@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace DAB_Assignment3_BirthClinic.Models
 {
@@ -12,6 +14,9 @@ namespace DAB_Assignment3_BirthClinic.Models
             RoomId = GlobalNumbers.Instance.getRoomId();
             Type = type;
         }
+        [BsonId]
+        [BsonRepresentation(BsonType.ObjectId)]
+        public ObjectId _id { get; set; }
         public int RoomId { get; set; }
         public string Type;
         public string RoomName { get; set; }
