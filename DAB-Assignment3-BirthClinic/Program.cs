@@ -18,7 +18,7 @@ namespace DAB_Assignment3_BirthClinic
         private static IMongoCollection<Clinician> collectionClinicians;
         private static IMongoCollection<Person> collectionOtherPersons;
         private static IMongoCollection<Room> collectionRooms;
-        private static IMongoCollection<Reservation> collectionReservations;
+        //private static IMongoCollection<Reservation> collectionReservations;
         private static bool _running;
 
 
@@ -33,7 +33,7 @@ namespace DAB_Assignment3_BirthClinic
             collectionClinicians = database.GetCollection<Clinician>("Clinicians");
             collectionOtherPersons = database.GetCollection<Person>("OtherPersons");
             collectionRooms = database.GetCollection<Room>("Rooms");
-            collectionReservations = database.GetCollection<Reservation>("Reservations");
+            //collectionReservations = database.GetCollection<Reservation>("Reservations");
             _running = true;
 
             while (_running)
@@ -52,82 +52,14 @@ namespace DAB_Assignment3_BirthClinic
             }
 
 
-
-
-
-
-
-            //var doc = new BsonDocument()
-            //{
-            //    {"Name", "Hugo"}
-            //};
-            //collection.InsertOne(doc);
-
-            //var dblist = client.ListDatabases().ToList();
-            //foreach (var db in dblist)
-            //{
-            //    Console.WriteLine(db);
-            //}
-            //Console.WriteLine("\n\n");
-
-            Birth testBirth = new Birth();
-            Child testChild = new Child("TheChild");
-            Mother testMother = new Mother("TheMother");
-            FamilyMember testFather = new FamilyMember("TheFather", "Father");
-            testChild.FamilyMembersId.Add(testFather.PersonId);
-            testChild.Mother = testMother;
-            // Vi kunne også gøre children til Id'er. IDK
-            testMother.Children.Add(testChild.PersonId);
-
-            // Her kan vi instedet bruge insert many
-            collectionOtherPersons.InsertOne(testChild);
-            collectionOtherPersons.InsertOne(testFather);
-            collectionOtherPersons.InsertOne(testMother);
-            // God ide at kalde dispose efter hver insert. Ellers hvis der sker fejl undervejs, så vil Id'er ikke være helt korrekte.
-            GlobalNumbers.Instance.Dispose();
-
-            Clinician testClinician = new Doctor("TheDoctor");
-            Clinician testClinician2 = new MidWife("TheMidwife");
-
-            collectionClinicians.InsertOne(testClinician);
-            collectionClinicians.InsertOne(testClinician2);
-            GlobalNumbers.Instance.Dispose();
-
-            DateTime testTime = new DateTime(2021, 06, 05);
-
-            // Child er ikke et Id pt, det kan vi altid gøre så det bliver.
-            testBirth.Child = testChild;
-            testBirth.CliniciansId.Add(testClinician.PersonId);
-            testBirth.CliniciansId.Add(testClinician2.PersonId);
-            testBirth.PlannedStartTime = testTime;
-
-
-            BsonDocument output = BsonDocument.Parse(JsonSerializer.Serialize(testBirth));
-
-            collectionBirths.InsertOne(testBirth);
-            GlobalNumbers.Instance.Dispose();
-            Console.WriteLine(output);
-
-
-
             // MUST BE AS THE LAST LINE
             // This Updates the GlobalNumbers document, so the ids are correct
             GlobalNumbers.Instance.Dispose();
         }
 
-        // 1. View
-        //Show planned births for the coming three days
+       
 
-
-        // 3. View
-        //Show the at current time ongoing births with information about the birth, parents,
-        //    clinicians associated and the birth room
-
-        // 5. View
-        //Given a birth can planned
-        //    a) Show the rooms reserved the birth
-        //    b) Show the clinicians assigned the birth
-
+        
         private static void HandleKey(ConsoleKeyInfo key)
         {
             switch (key.Key)
