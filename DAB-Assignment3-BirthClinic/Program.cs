@@ -8,6 +8,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using Mother = DAB_Assignment3_BirthClinic.Models.Mother;
 
 namespace DAB_Assignment3_BirthClinic
 {
@@ -34,18 +35,14 @@ namespace DAB_Assignment3_BirthClinic
             collectionRooms = database.GetCollection<Room>("Rooms");
             collectionReservations = database.GetCollection<Reservation>("Reservations");
             _running = true;
-            AddBirth();
+
             while (_running)
             {
                 Console.WriteLine("Muligheder: ");
-                Console.WriteLine("1: Vis planlagte fødsler: ");
-                Console.WriteLine("2: Ledige rum og klinikarbejdere ");
+                Console.WriteLine("1: Vis planlagte fødsler de næste 3 dage: ");
                 Console.WriteLine("3: Aktuelt igangværende fødsler ");
-                Console.WriteLine("4: Værelser i brug lige nu (ikke fødselsrum)");
                 Console.WriteLine("5: Vis reserverede rum og associeret personale til specifik fødsel");
-                Console.WriteLine("F: Færdiggør reservation af rum ");
                 Console.WriteLine("B: Lav en reservation til en fødsel");
-                Console.WriteLine("A: Annuller reservation af rum ");
                 Console.WriteLine("S: Seed data til databasen ");
                 Console.WriteLine("x: Luk ");
                 var key = Console.ReadKey();
@@ -72,56 +69,55 @@ namespace DAB_Assignment3_BirthClinic
             //Console.WriteLine("\n\n");
 
             Birth testBirth = new Birth();
-                Child testChild = new Child("TheChild");
-                Mother testMother = new Mother("TheMother");
-                FamilyMember testFather = new FamilyMember("TheFather", "Father");
-                testChild.FamilyMembersId.Add(testFather.PersonId);
-                testChild.MotherId = testMother.PersonId;
-                // Vi kunne også gøre children til Id'er. IDK
-                testMother.Children.Add(testChild.PersonId);
+            Child testChild = new Child("TheChild");
+            Mother testMother = new Mother("TheMother");
+            FamilyMember testFather = new FamilyMember("TheFather", "Father");
+            testChild.FamilyMembersId.Add(testFather.PersonId);
+            testChild.Mother = testMother;
+            // Vi kunne også gøre children til Id'er. IDK
+            testMother.Children.Add(testChild.PersonId);
 
-                // Her kan vi instedet bruge insert many
-                collectionOtherPersons.InsertOne(testChild);
-                collectionOtherPersons.InsertOne(testFather);
-                collectionOtherPersons.InsertOne(testMother);
+            // Her kan vi instedet bruge insert many
+            collectionOtherPersons.InsertOne(testChild);
+            collectionOtherPersons.InsertOne(testFather);
+            collectionOtherPersons.InsertOne(testMother);
             // God ide at kalde dispose efter hver insert. Ellers hvis der sker fejl undervejs, så vil Id'er ikke være helt korrekte.
             GlobalNumbers.Instance.Dispose();
 
-                Clinician testClinician = new Doctor("TheDoctor");
-                Clinician testClinician2 = new MidWife("TheMidwife");
+            Clinician testClinician = new Doctor("TheDoctor");
+            Clinician testClinician2 = new MidWife("TheMidwife");
 
             collectionClinicians.InsertOne(testClinician);
             collectionClinicians.InsertOne(testClinician2);
             GlobalNumbers.Instance.Dispose();
 
             DateTime testTime = new DateTime(2021, 06, 05);
-                
-                // Child er ikke et Id pt, det kan vi altid gøre så det bliver.
-                testBirth.Child = testChild;
-                testBirth.CliniciansId.Add(testClinician.PersonId);
-                testBirth.CliniciansId.Add(testClinician2.PersonId);
-                testBirth.PlannedStartTime = testTime;
-                
 
-                BsonDocument output = BsonDocument.Parse(JsonSerializer.Serialize(testBirth));
+            // Child er ikke et Id pt, det kan vi altid gøre så det bliver.
+            testBirth.Child = testChild;
+            testBirth.CliniciansId.Add(testClinician.PersonId);
+            testBirth.CliniciansId.Add(testClinician2.PersonId);
+            testBirth.PlannedStartTime = testTime;
 
-                collectionBirths.InsertOne(testBirth);
-                GlobalNumbers.Instance.Dispose();
-                Console.WriteLine(output);
 
-            
+            BsonDocument output = BsonDocument.Parse(JsonSerializer.Serialize(testBirth));
 
-                // MUST BE AS THE LAST LINE
-                GlobalNumbers.Instance.Dispose();
+            collectionBirths.InsertOne(testBirth);
+            GlobalNumbers.Instance.Dispose();
+            Console.WriteLine(output);
+
+
+
+            // MUST BE AS THE LAST LINE
+            GlobalNumbers.Instance.Dispose();
         }
 
         // Opdel databasen i Person, Birth og reservation og rooms. 
         // Person kan indeholde et array af details, som bruges til at fortælle om personen er en clinician, barn, familiemedlem m.m.
         //
 
-        // 2. View
-        //Show clinicians, birth rooms maternity rooms and rest rooms available at the clinic for
-        //the next five days
+        // 1. View
+        //Show planned births for the comingthreedays
 
 
         // 3. View
@@ -148,20 +144,14 @@ namespace DAB_Assignment3_BirthClinic
             {
                 case ConsoleKey.D1:
                 case ConsoleKey.NumPad1:
-                    //ShowPlannedBirths(context);
+                    ShowPlannedBirthsNext3Days();
                     break;
-                case ConsoleKey.D2:
-                case ConsoleKey.NumPad2:
-                    //ShowAvailableRoomsAndClinicians(context);
-                    break;
+               
                 case ConsoleKey.D3:
                 case ConsoleKey.NumPad3:
-                    //ShowOngoingBirths(context);
+                    ShowOngoingBirths();
                     break;
-                case ConsoleKey.D4:
-                case ConsoleKey.NumPad4:
-                    //ShowMaternityRoomsAndRestingRoomsInUse(context);
-                    break;
+                
                 case ConsoleKey.D5:
                 case ConsoleKey.NumPad5:
                     ShowRoomsAndCliniciansWbirth();
@@ -169,17 +159,13 @@ namespace DAB_Assignment3_BirthClinic
                 case ConsoleKey.X:
                     _running = false;
                     break;
-                case ConsoleKey.F:
-                    //FinnishRoomReservation(context);
-                    break;
+                
                 case ConsoleKey.B:
-                    //AddBirth(context);
+                    AddBirth();
                     break;
-                case ConsoleKey.A:
-                    //CancelRoomReservation(context);
-                    break;
+                
                 case ConsoleKey.S:
-                    new SeedData(collectionRooms,collectionClinicians);
+                    new SeedData(collectionRooms, collectionClinicians);
                     break;
                 default:
                     Console.WriteLine("Ugyldigt valg");
@@ -191,10 +177,10 @@ namespace DAB_Assignment3_BirthClinic
         {
             // Til når brugeren skal vælge doctor og midwife.
             //var doctorFilter = Builders<Clinician>.Filter.All("Type", "Doctor");
-            List<Clinician> doctors = collectionClinicians.Find(r=>r.Type=="Doctor").ToList();
+            List<Clinician> doctors = collectionClinicians.Find(r => r.Type == "Doctor").ToList();
             List<Clinician> midWives = collectionClinicians.Find(r => r.Type == "MidWife").ToList();
 
-            Console.WriteLine("Velkommen til reservation af fødsel");
+            Console.WriteLine("\nVelkommen til reservation af fødsel");
             Console.WriteLine("-----------------------------------");
 
             Console.WriteLine("Hvad er navnet på barnet");
@@ -221,7 +207,7 @@ namespace DAB_Assignment3_BirthClinic
 
             Console.WriteLine("Hvilken jordmor vil du gerne have? Indtast tallet ud fra personen");
             int counter = 0;
-            foreach (MidWife mW in midWives)
+            foreach (var mW in midWives)
             {
                 Console.WriteLine(counter + ". " + mW.FullName);
                 counter++;
@@ -230,7 +216,7 @@ namespace DAB_Assignment3_BirthClinic
             int valgtMidwife = int.Parse(Console.ReadLine());
             counter = 0;
             Console.WriteLine("Hvilken doktor vil du gerne have? Indtast tallet ud fra personen");
-            foreach (Doctor dc in doctors)
+            foreach (var dc in doctors)
             {
                 Console.WriteLine(counter + ". " + dc.FullName);
                 counter++;
@@ -278,7 +264,7 @@ namespace DAB_Assignment3_BirthClinic
             DateTime PST = new DateTime(år, måned, dag, time, minut, 00);
             birth1.PlannedStartTime = PST;
             //child1.Birth = birth1;
-            child1.MotherId = mother1.PersonId;
+            child1.Mother = mother1;
             child1.FamilyMembersId = new List<int>();
             child1.FamilyMembersId.Add(father1.PersonId);
             mother1.Children = new List<int>();
@@ -399,17 +385,59 @@ namespace DAB_Assignment3_BirthClinic
         //    b) Show the clinicians assigned the birth
         public static void ShowRoomsAndCliniciansWbirth()
         {
-            Console.WriteLine("Type Birth ID:");
+            Console.WriteLine("\nType Birth ID:");
             int id = int.Parse(Console.ReadLine());
             var filter = Builders<Birth>.Filter.Where(b => b.BirthId == id);
-            Birth birth =collectionBirths.Find(filter).Single();
-            var mother=collectionOtherPersons.Find(Builders<Person>.Filter.Where(p => p.PersonId == birth.Child.MotherId));
-            Console.WriteLine(birth.Child.FullName);
+            Birth birth = collectionBirths.Find(filter).Single();
+            if (birth == null)
+            {
+                Console.WriteLine("Fødslen kunne ikke findes :(");
+                return;
+            }
 
-            //Find rooms:
+            Console.WriteLine("Name: " + birth.Child.FullName+ " mother: "+ birth.Child.Mother.FullName);
 
             //Find clinicians:
+            Console.WriteLine("Associated clinicians: ");
+            Clinician clinician;
+            foreach (var i in birth.CliniciansId)
+            {
+                clinician = collectionClinicians.Find(c => c.PersonId == i).Single();
+                Console.WriteLine(" " + clinician.FullName + " " + clinician.Type + " med id: " + clinician.PersonId);
+            }
+            //Find rooms:
+            Console.WriteLine("Reserved Rooms: ");
+            foreach (var res in birth.Child.Mother.Reservations)
+            {
+                var room = collectionRooms.Find(r => r.RoomId == res.ReservedRoomId).Single();
+                Console.WriteLine(" " + room.RoomName + " med id: " + room.RoomId);
+            }
+
+        }
+        //1: show planned births the next 3 days
+        public static void ShowPlannedBirthsNext3Days()
+        {
+            var births = collectionBirths.Find(b =>
+                b.PlannedStartTime < DateTime.Now + TimeSpan.FromDays(3)
+                && b.PlannedStartTime > DateTime.Now).ToList();
+            Console.WriteLine("\nPlanned births the next 3 days:");
+            foreach (var b in births)
+            {
+                Console.WriteLine("BirthId: " + b.id + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
+            }
+        }
+
+        //3: Aktuelt igangværende fødsler 
+        public static void ShowOngoingBirths()
+        {
+            var births = collectionBirths.Find(b =>
+                b.PlannedStartTime < DateTime.Now 
+                && b.PlannedStartTime > DateTime.Now-TimeSpan.FromHours(5)).ToList();
+            Console.WriteLine("\nOngoing Births (Births with a starttime in the last 5 hours)");
+            foreach (var b in births)
+            {
+                Console.WriteLine("BirthId: " + b.id + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
+            }
         }
     }
-
 }

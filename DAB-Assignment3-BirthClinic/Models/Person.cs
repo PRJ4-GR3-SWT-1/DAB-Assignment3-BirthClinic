@@ -31,7 +31,7 @@ namespace DAB_Assignment3_BirthClinic.Models
         {
 
         }
-        public int MotherId { get; set; }
+        public Mother Mother { get; set; }
         public List<int> FamilyMembersId { get; set; }
         public DateTime Birthday { get; set; }
 
