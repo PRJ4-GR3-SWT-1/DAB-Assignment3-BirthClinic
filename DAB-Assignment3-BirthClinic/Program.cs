@@ -77,7 +77,7 @@ namespace DAB_Assignment3_BirthClinic
             Mother testMother = new Mother("TheMother");
             FamilyMember testFather = new FamilyMember("TheFather", "Father");
             testChild.FamilyMembersId.Add(testFather.PersonId);
-            testChild.MotherId = testMother.PersonId;
+            testChild.Mother = testMother;
             // Vi kunne også gøre children til Id'er. IDK
             testMother.Children.Add(testChild.PersonId);
 
@@ -279,7 +279,7 @@ namespace DAB_Assignment3_BirthClinic
             DateTime PST = new DateTime(år, måned, dag, time, minut, 00);
             birth1.PlannedStartTime = PST;
             //child1.Birth = birth1;
-            child1.MotherId = mother1.PersonId;
+            child1.Mother = mother1;
             child1.FamilyMembersId = new List<int>();
             child1.FamilyMembersId.Add(father1.PersonId);
             mother1.Children = new List<int>();
