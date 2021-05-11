@@ -372,7 +372,7 @@ namespace DAB_Assignment3_BirthClinic
                 bool roomAlreadyReserved = false;
                 foreach (var res in room.Reservations)
                 {
-                    if (res.ReservationEnd <= starttime && res.ReservationStart >= endTime) continue;
+                    if (res.ReservationEnd <= starttime|| res.ReservationStart >= endTime) continue;
                     else roomAlreadyReserved = true;
                 }
                 if (roomAlreadyReserved == false) Console.WriteLine(room.Type+": "+room.RoomId + " is available");
@@ -397,7 +397,7 @@ namespace DAB_Assignment3_BirthClinic
                 return;
             }
 
-            Console.WriteLine("Name: " + birth.Child.FullName+ " mother: "+ birth.Child.Mother.FullName);
+            Console.WriteLine("Name: " + birth.Child.FullName+ " mother: "+ birth.Child.Mother.FullName +" Planned to start " + birth.PlannedStartTime.ToString("F"));
 
             //Find clinicians:
             Console.WriteLine("Associated clinicians: ");
@@ -412,7 +412,7 @@ namespace DAB_Assignment3_BirthClinic
             foreach (var res in birth.Child.Mother.Reservations)
             {
                 var room = collectionRooms.Find(r => r.RoomId == res.ReservedRoomId).Single();
-                Console.WriteLine(" " + room.RoomName + " med id: " + room.RoomId);
+                Console.WriteLine(" " + room.RoomName + " ("+room.Type+ ") med id: " + room.RoomId);
             }
 
         }
