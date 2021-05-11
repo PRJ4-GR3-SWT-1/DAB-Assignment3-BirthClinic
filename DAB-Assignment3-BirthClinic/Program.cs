@@ -418,8 +418,8 @@ namespace DAB_Assignment3_BirthClinic
         public static void ShowPlannedBirthsNext3Days()
         {
             var births = collectionBirths.Find(b =>
-                b.PlannedStartTime < DateTime.Now + TimeSpan.FromDays(3)
-                && b.PlannedStartTime > DateTime.Now).ToList();
+                b.PlannedStartTime < DateTime.UtcNow + TimeSpan.FromDays(3)
+                && b.PlannedStartTime > DateTime.UtcNow).ToList();
             Console.WriteLine("\nPlanned births the next 3 days:");
             foreach (var b in births)
             {
@@ -431,8 +431,8 @@ namespace DAB_Assignment3_BirthClinic
         public static void ShowOngoingBirths()
         {
             var births = collectionBirths.Find(b =>
-                b.PlannedStartTime < DateTime.Now 
-                && b.PlannedStartTime > DateTime.Now-TimeSpan.FromHours(5)).ToList();
+                b.PlannedStartTime < DateTime.UtcNow 
+                && b.PlannedStartTime > DateTime.UtcNow-TimeSpan.FromHours(5)).ToList();
             Console.WriteLine("\nOngoing Births (Births with a starttime in the last 5 hours)");
             foreach (var b in births)
             {
