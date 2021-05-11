@@ -225,7 +225,7 @@ namespace DAB_Assignment3_BirthClinic
             int valgtDoctor = int.Parse(Console.ReadLine());
 
             Console.WriteLine("Du skal også have et fødselsrum reserveret, Vi finder ledige rum for dagen. \n Indtast tallet ud fra rummet");
-            var birthrooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), new DateTime(år, måned, dag, time, minut, 00)+TimeSpan.FromHours(5), "BirthRoom");
+            var birthrooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc), new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) +TimeSpan.FromHours(5), "BirthRoom");
             int valgtRumId = int.Parse(Console.ReadLine());
             Room chosenBirthRoom = birthrooms.Find(r => r.RoomId == valgtRumId);
 
@@ -234,7 +234,7 @@ namespace DAB_Assignment3_BirthClinic
             if (Console.ReadLine().ToLower() == "y")
             {
                 Console.WriteLine("MaternityRoom reservation \n Indtast tallet ud fra rummet");
-                var maternityRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromDays(5), "Maternity Room");
+                var maternityRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc), new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) + TimeSpan.FromDays(5), "Maternity Room");
                 valgtRumId = int.Parse(Console.ReadLine());
                 chosenMaternityRoom = maternityRooms.Find(r => r.RoomId == valgtRumId);
             }
@@ -243,7 +243,7 @@ namespace DAB_Assignment3_BirthClinic
             if (Console.ReadLine().ToLower() == "y")
             {
                 Console.WriteLine("RestingRoom reservation \n Indtast tallet ud fra rummet"); 
-                var restingRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromHours(4), "Resting Room");
+                var restingRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc), new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) + TimeSpan.FromHours(4), "Resting Room");
                 valgtRumId = int.Parse(Console.ReadLine());
                 chosenRestingRoom = restingRooms.Find(r => r.RoomId == valgtRumId);
             }
@@ -261,7 +261,7 @@ namespace DAB_Assignment3_BirthClinic
 
             // Her sættes referencer
             birth1.Child = child1;
-            DateTime PST = new DateTime(år, måned, dag, time, minut, 00);
+            DateTime PST = new DateTime(år, måned, dag, time, minut, 00,DateTimeKind.Utc);
             birth1.PlannedStartTime = PST;
             //child1.Birth = birth1;
             child1.Mother = mother1;
@@ -285,7 +285,7 @@ namespace DAB_Assignment3_BirthClinic
 
             // Her sættes reservationerne for alle rum.
             Reservation res1 = new Reservation();
-            res1.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
+            res1.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc);
             res1.ReservationEnd = res1.ReservationStart + TimeSpan.FromHours(5);
             res1.UserId = mother1.PersonId;
             res1.ReservedRoomId = chosenBirthRoom.RoomId;
@@ -297,7 +297,7 @@ namespace DAB_Assignment3_BirthClinic
             Reservation res2 = new Reservation();
             if (chosenMaternityRoom != null)
             {
-                res2.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
+                res2.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc);
                 res2.ReservationEnd = res2.ReservationStart + TimeSpan.FromDays(5);
                 res2.UserId = mother1.PersonId;
                 res2.ReservedRoomId = chosenMaternityRoom.RoomId;
@@ -309,7 +309,7 @@ namespace DAB_Assignment3_BirthClinic
             Reservation res3 = new Reservation();
             if (chosenRestingRoom != null)
             {
-                res3.ReservationStart = new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromHours(5);
+                res3.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) + TimeSpan.FromHours(5);
                 res3.ReservationEnd = res3.ReservationStart + TimeSpan.FromHours(4);
                 res3.UserId = mother1.PersonId;
                 res3.ReservedRoomId = chosenRestingRoom.RoomId;
@@ -320,12 +320,14 @@ namespace DAB_Assignment3_BirthClinic
             // Alt gemmes og reservationen er gemmenført
             // Insert
             collectionBirths.InsertOne(birth1);
-            collectionOtherPersons.InsertOne(child1);
-            collectionOtherPersons.InsertOne(mother1);
+            // Mother and child can be found under the specific birth
+            //collectionOtherPersons.InsertOne(child1);
+            //collectionOtherPersons.InsertOne(mother1);
             collectionOtherPersons.InsertOne(father1);
-            collectionReservations.InsertOne(res1);
-            collectionReservations.InsertOne(res2);
-            collectionReservations.InsertOne(res3);
+            
+            //collectionReservations.InsertOne(res1);
+            //if(chosenMaternityRoom != null) collectionReservations.InsertOne(res2);
+            //if(chosenRestingRoom != null) collectionReservations.InsertOne(res3);
             // Update Clinicians
             var doctorfilter = Builders<Clinician>.Filter.Eq("PersonId", doctors[valgtDoctor].PersonId);
             var doctorUpdate = Builders<Clinician>.Update.Push("AssociatedBirthsId", birth1.BirthId);
@@ -370,7 +372,7 @@ namespace DAB_Assignment3_BirthClinic
                 bool roomAlreadyReserved = false;
                 foreach (var res in room.Reservations)
                 {
-                    if (res.ReservationEnd <= starttime && res.ReservationStart >= endTime) continue;
+                    if (res.ReservationEnd <= starttime|| res.ReservationStart >= endTime) continue;
                     else roomAlreadyReserved = true;
                 }
                 if (roomAlreadyReserved == false) Console.WriteLine(room.Type+": "+room.RoomId + " is available");
@@ -395,7 +397,7 @@ namespace DAB_Assignment3_BirthClinic
                 return;
             }
 
-            Console.WriteLine("Name: " + birth.Child.FullName+ " mother: "+ birth.Child.Mother.FullName);
+            Console.WriteLine("Name: " + birth.Child.FullName+ " mother: "+ birth.Child.Mother.FullName +" Planned to start " + birth.PlannedStartTime.ToString("F"));
 
             //Find clinicians:
             Console.WriteLine("Associated clinicians: ");
@@ -410,7 +412,7 @@ namespace DAB_Assignment3_BirthClinic
             foreach (var res in birth.Child.Mother.Reservations)
             {
                 var room = collectionRooms.Find(r => r.RoomId == res.ReservedRoomId).Single();
-                Console.WriteLine(" " + room.RoomName + " med id: " + room.RoomId);
+                Console.WriteLine(" " + room.RoomName + " ("+room.Type+ ") med id: " + room.RoomId);
             }
 
         }
@@ -418,12 +420,12 @@ namespace DAB_Assignment3_BirthClinic
         public static void ShowPlannedBirthsNext3Days()
         {
             var births = collectionBirths.Find(b =>
-                b.PlannedStartTime < DateTime.Now + TimeSpan.FromDays(3)
-                && b.PlannedStartTime > DateTime.Now).ToList();
+                b.PlannedStartTime < DateTime.UtcNow + TimeSpan.FromDays(3)
+                && b.PlannedStartTime > DateTime.UtcNow).ToList();
             Console.WriteLine("\nPlanned births the next 3 days:");
             foreach (var b in births)
             {
-                Console.WriteLine("BirthId: " + b.id + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName+".");
+                Console.WriteLine("👶 BirthId: " + b.id + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName+".");
             }
         }
 
@@ -431,12 +433,13 @@ namespace DAB_Assignment3_BirthClinic
         public static void ShowOngoingBirths()
         {
             var births = collectionBirths.Find(b =>
-                b.PlannedStartTime < DateTime.Now 
-                && b.PlannedStartTime > DateTime.Now-TimeSpan.FromHours(5)).ToList();
+                b.PlannedStartTime < DateTime.UtcNow 
+                && b.PlannedStartTime > DateTime.UtcNow-TimeSpan.FromHours(5)).ToList();
             Console.WriteLine("\nOngoing Births (Births with a starttime in the last 5 hours)");
             foreach (var b in births)
             {
                 Console.WriteLine("BirthId: " + b.id + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName +".");
+                Console.WriteLine("BirthId: " + b.BirthId + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
             }
         }
     }
