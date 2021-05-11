@@ -20,7 +20,7 @@ namespace BirthClinicLibrary.Data
         private static void SeedRooms(IMongoCollection<Room> collection)
         {
 
-            List<Room> rooms = new List<Room>();
+            var rooms = new List<Room>();
 
             #region Resting Room
 
@@ -134,7 +134,7 @@ namespace BirthClinicLibrary.Data
 
         private static void SeedClinicians(IMongoCollection<Clinician> collection)
         {
-            List<Clinician> clinicians = new List<Clinician>();
+            var clinicians = new List<Clinician>();
 
             #region MidWives
 
