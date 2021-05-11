@@ -164,7 +164,7 @@ namespace DAB_Assignment3_BirthClinic
                     break;
                 case ConsoleKey.D5:
                 case ConsoleKey.NumPad5:
-                    //ShowRoomsAndClinicianReservedForBirth(context);
+                    ShowRoomsAndCliniciansWbirth();
                     break;
                 case ConsoleKey.X:
                     _running = false;
@@ -352,6 +352,23 @@ namespace DAB_Assignment3_BirthClinic
             }
 
 
+        }
+        // 5. View
+        //Given a birth can planned
+        //    a) Show the rooms reserved the birth
+        //    b) Show the clinicians assigned the birth
+        public static void ShowRoomsAndCliniciansWbirth()
+        {
+            Console.WriteLine("Type Birth ID:");
+            int id = int.Parse(Console.ReadLine());
+            var filter = Builders<Birth>.Filter.Where(b => b.BirthId == id);
+            Birth birth =collectionBirths.Find(filter).Single();
+            var mother=collectionOtherPersons.Find(Builders<Person>.Filter.Where(p => p.PersonId == birth.Child.MotherId));
+            Console.WriteLine(birth.Child.FullName);
+
+            //Find rooms:
+
+            //Find clinicians:
         }
     }
 
