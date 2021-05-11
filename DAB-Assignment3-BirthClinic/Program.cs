@@ -180,7 +180,7 @@ namespace DAB_Assignment3_BirthClinic
             List<Clinician> doctors = collectionClinicians.Find(r => r.Type == "Doctor").ToList();
             List<Clinician> midWives = collectionClinicians.Find(r => r.Type == "MidWife").ToList();
 
-            Console.WriteLine("Velkommen til reservation af fødsel");
+            Console.WriteLine("\nVelkommen til reservation af fødsel");
             Console.WriteLine("-----------------------------------");
 
             Console.WriteLine("Hvad er navnet på barnet");
@@ -345,7 +345,7 @@ namespace DAB_Assignment3_BirthClinic
         //    b) Show the clinicians assigned the birth
         public static void ShowRoomsAndCliniciansWbirth()
         {
-            Console.WriteLine("Type Birth ID:");
+            Console.WriteLine("\nType Birth ID:");
             int id = int.Parse(Console.ReadLine());
             var filter = Builders<Birth>.Filter.Where(b => b.BirthId == id);
             Birth birth = collectionBirths.Find(filter).Single();
@@ -380,7 +380,7 @@ namespace DAB_Assignment3_BirthClinic
             var births = collectionBirths.Find(b =>
                 b.PlannedStartTime < DateTime.Now + TimeSpan.FromDays(3)
                 && b.PlannedStartTime > DateTime.Now).ToList();
-            Console.WriteLine("Planned births the next 3 days:");
+            Console.WriteLine("\nPlanned births the next 3 days:");
             foreach (var b in births)
             {
                 Console.WriteLine("BirthId: " + b.id + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
@@ -393,7 +393,7 @@ namespace DAB_Assignment3_BirthClinic
             var births = collectionBirths.Find(b =>
                 b.PlannedStartTime < DateTime.Now 
                 && b.PlannedStartTime > DateTime.Now-TimeSpan.FromHours(5)).ToList();
-            Console.WriteLine("Ongoing Births (Births with a starttime in the last 5 hours)");
+            Console.WriteLine("\nOngoing Births (Births with a starttime in the last 5 hours)");
             foreach (var b in births)
             {
                 Console.WriteLine("BirthId: " + b.id + " Name: " + b.Child.FullName + "Mother: " + b.Child.Mother.FullName);
