@@ -359,12 +359,24 @@ namespace DAB_Assignment3_BirthClinic
             int id = int.Parse(Console.ReadLine());
             var filter = Builders<Birth>.Filter.Where(b => b.BirthId == id);
             Birth birth =collectionBirths.Find(filter).Single();
-            var mother=collectionOtherPersons.Find(Builders<Person>.Filter.Where(p => p.PersonId == birth.Child.MotherId));
-            Console.WriteLine(birth.Child.FullName);
-
-            //Find rooms:
+            var mother=collectionOtherPersons.Find(Builders<Person>.Filter.Where(p => p.PersonId == birth.Child.MotherId)).Single();
+            Console.WriteLine("Name: "+ birth.Child.FullName);
 
             //Find clinicians:
+            Console.WriteLine("Associated clinicians: ");
+            Clinician clinician;
+            foreach (var i in birth.CliniciansId)
+            {
+                clinician=collectionClinicians.Find(c=>c.PersonId==i).Single();
+                Console.WriteLine(" "+clinician.FullName+" "+clinician.Type);
+            }
+            //Find rooms:
+            Console.WriteLine("Reserved Rooms: ");
+            var reservations = collectionReservations.Find(r => r.UserId == birth.Child.MotherId);
+            foreach (var r in reservations.ToList())
+            {
+                Console.WriteLine(" "+);
+            }
         }
     }
 
