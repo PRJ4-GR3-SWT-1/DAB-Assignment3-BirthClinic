@@ -373,7 +373,7 @@ namespace DAB_Assignment3_BirthClinic
                     if (res.ReservationEnd <= starttime && res.ReservationStart >= endTime) continue;
                     else roomAlreadyReserved = true;
                 }
-                if (roomAlreadyReserved == false) Console.WriteLine(room.Type+": "+room.RoomId + "is available");
+                if (roomAlreadyReserved == false) Console.WriteLine(room.Type+": "+room.RoomId + " is available");
             }
 
             return liRo;
