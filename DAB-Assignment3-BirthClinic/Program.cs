@@ -238,29 +238,29 @@ namespace DAB_Assignment3_BirthClinic
 
             int valgtDoctor = int.Parse(Console.ReadLine());
 
-            //Console.WriteLine("Du skal også have et fødselsrum reserveret, Vi finder ledige rum for dagen. \n Indtast tallet ud fra rummet");
-            //ShowAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), "birthroom");
-            //int valgtRumId = int.Parse(Console.ReadLine());
-            //Room chosenBirthRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
+            Console.WriteLine("Du skal også have et fødselsrum reserveret, Vi finder ledige rum for dagen. \n Indtast tallet ud fra rummet");
+            var birthrooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), new DateTime(år, måned, dag, time, minut, 00)+TimeSpan.FromHours(5), "BirthRoom");
+            int valgtRumId = int.Parse(Console.ReadLine());
+            Room chosenBirthRoom = birthrooms.Find(r => r.RoomId == valgtRumId);
 
-            //Console.WriteLine("Vil du også reservere et Maternityroom y/n");
-            //Room chosenMaternityRoom = null;
-            //if (Console.ReadLine().ToLower() == "y")
-            //{
-            //    Console.WriteLine("MaternityRoom reservation \n Indtast tallet ud fra rummet");
-            //    ShowAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), "maternityroom");
-            //    valgtRumId = int.Parse(Console.ReadLine());
-            //    chosenMaternityRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
-            //}
-            //Console.WriteLine("Vil du også reservere et restingroom y/n");
-            //Room chosenRestingRoom = null;
-            //if (Console.ReadLine().ToLower() == "y")
-            //{
-            //    Console.WriteLine("RestingRoom reservation \n Indtast tallet ud fra rummet");
-            //    ShowAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), "restingroom");
-            //    valgtRumId = int.Parse(Console.ReadLine());
-            //    chosenRestingRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
-            //}
+            Console.WriteLine("Vil du også reservere et Maternityroom y/n");
+            Room chosenMaternityRoom = null;
+            if (Console.ReadLine().ToLower() == "y")
+            {
+                Console.WriteLine("MaternityRoom reservation \n Indtast tallet ud fra rummet");
+                var maternityRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromDays(5), "Maternity Room");
+                valgtRumId = int.Parse(Console.ReadLine());
+                chosenMaternityRoom = maternityRooms.Find(r => r.RoomId == valgtRumId);
+            }
+            Console.WriteLine("Vil du også reservere et restingroom y/n");
+            Room chosenRestingRoom = null;
+            if (Console.ReadLine().ToLower() == "y")
+            {
+                Console.WriteLine("RestingRoom reservation \n Indtast tallet ud fra rummet"); 
+                var restingRooms = showAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromHours(4), "Resting Room");
+                valgtRumId = int.Parse(Console.ReadLine());
+                chosenRestingRoom = restingRooms.Find(r => r.RoomId == valgtRumId);
+            }
 
             Console.WriteLine("Tak for dit info, vores super database vil nu oprette reservationen for dig");
 
@@ -297,60 +297,100 @@ namespace DAB_Assignment3_BirthClinic
             //
 
 
-            ////// Her sættes reservationerne for alle rum.
-            ////Reservation res1 = new Reservation();
-            ////res1.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
-            ////res1.ReservationEnd = res1.ReservationStart + TimeSpan.FromHours(5);
-            ////res1.UserId = mother1.PersonId;
-            ////res1.ReservedRoomId = chosenBirthRoom.RoomId;
-            ////mother1.ReservationsIds = new List<int>();
-            ////chosenBirthRoom.ReservationsIds = new List<int>();
-            ////mother1.ReservationsIds.Add(res1.ReservationId);
-            ////chosenBirthRoom.ReservationsIds.Add(res1.ReservationId);
+            // Her sættes reservationerne for alle rum.
+            Reservation res1 = new Reservation();
+            res1.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
+            res1.ReservationEnd = res1.ReservationStart + TimeSpan.FromHours(5);
+            res1.UserId = mother1.PersonId;
+            res1.ReservedRoomId = chosenBirthRoom.RoomId;
+            mother1.Reservations = new List<Reservation>();
+            chosenBirthRoom.Reservations = new List<Reservation>();
+            mother1.Reservations.Add(res1);
+            chosenBirthRoom.Reservations.Add(res1);
 
-            ////Reservation res2 = new Reservation();
-            ////if (chosenMaternityRoom != null)
-            ////{
-            ////    res2.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
-            ////    res2.ReservationEnd = res2.ReservationStart + TimeSpan.FromDays(5);
-            ////    res2.User = mother1;
-            ////    res2.ReservedRoom = chosenMaternityRoom;
-            ////    chosenMaternityRoom.Reservations = new List<Reservation>();
-            ////    mother1.Reservations.Add(res2);
-            ////    chosenMaternityRoom.Reservations.Add(res2);
-            ////}
+            Reservation res2 = new Reservation();
+            if (chosenMaternityRoom != null)
+            {
+                res2.ReservationStart = new DateTime(år, måned, dag, time, minut, 00);
+                res2.ReservationEnd = res2.ReservationStart + TimeSpan.FromDays(5);
+                res2.UserId = mother1.PersonId;
+                res2.ReservedRoomId = chosenMaternityRoom.RoomId;
+                chosenMaternityRoom.Reservations = new List<Reservation>();
+                mother1.Reservations.Add(res2);
+                chosenMaternityRoom.Reservations.Add(res2);
+            }
 
-            ////Reservation res3 = new Reservation();
-            ////if (chosenRestingRoom != null)
-            ////{
-            ////    res3.ReservationStart = new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromHours(5);
-            ////    res3.ReservationEnd = res3.ReservationStart + TimeSpan.FromHours(4);
-            ////    res3.User = mother1;
-            ////    res3.ReservedRoom = chosenRestingRoom;
-            ////    chosenRestingRoom.Reservations = new List<Reservation>();
-            ////    mother1.Reservations.Add(res3);
-            ////    chosenRestingRoom.Reservations.Add(res3);
-            ////}
-            ////// Alt gemmes og reservationen er gemmenført
-            ////context.SaveChanges();
+            Reservation res3 = new Reservation();
+            if (chosenRestingRoom != null)
+            {
+                res3.ReservationStart = new DateTime(år, måned, dag, time, minut, 00) + TimeSpan.FromHours(5);
+                res3.ReservationEnd = res3.ReservationStart + TimeSpan.FromHours(4);
+                res3.UserId = mother1.PersonId;
+                res3.ReservedRoomId = chosenRestingRoom.RoomId;
+                chosenRestingRoom.Reservations = new List<Reservation>();
+                mother1.Reservations.Add(res3);
+                chosenRestingRoom.Reservations.Add(res3);
+            }
+            // Alt gemmes og reservationen er gemmenført
+            // Insert
+            collectionBirths.InsertOne(birth1);
+            collectionOtherPersons.InsertOne(child1);
+            collectionOtherPersons.InsertOne(mother1);
+            collectionOtherPersons.InsertOne(father1);
+            collectionReservations.InsertOne(res1);
+            collectionReservations.InsertOne(res2);
+            collectionReservations.InsertOne(res3);
+            // Update Clinicians
+            var doctorfilter = Builders<Clinician>.Filter.Eq("PersonId", doctors[valgtDoctor].PersonId);
+            var doctorUpdate = Builders<Clinician>.Update.Push("AssociatedBirthsId", birth1.BirthId);
+            var result = collectionClinicians.UpdateOne(doctorfilter, doctorUpdate);
 
-            ////Console.WriteLine($"Reservation til den {dato}, med personerne {childName}, {motherName} og {fatherName} er gennemført og gemt");
+            var midwifefilter = Builders<Clinician>.Filter.Eq("PersonId", midWives[valgtMidwife].PersonId);
+            var midwifeUpdate = Builders<Clinician>.Update.Push("AssociatedBirthsId", birth1.BirthId);
+            var result2 = collectionClinicians.UpdateOne(midwifefilter, midwifeUpdate);
+            // Update Rooms
+            var birthroomfilter = Builders<Room>.Filter.Eq("RoomId", chosenBirthRoom.RoomId);
+            var birthroomupdate = Builders<Room>.Update.Push("Reservations", res1);
+            var resultroom1 = collectionRooms.UpdateOne(birthroomfilter, birthroomupdate);
+            if (chosenMaternityRoom != null)
+            {
+                var maternityroomfilter = Builders<Room>.Filter.Eq("RoomId", chosenMaternityRoom.RoomId);
+                var maternityroomupdate = Builders<Room>.Update.Push("Reservations", res2);
+                var resultroom2 = collectionRooms.UpdateOne(maternityroomfilter, maternityroomupdate);
+            }
+
+            if (chosenRestingRoom != null)
+            {
+                var restroomfilter = Builders<Room>.Filter.Eq("RoomId", chosenRestingRoom.RoomId);
+                var restroomupdate = Builders<Room>.Update.Push("Reservations", res3);
+                var resultroom3 = collectionRooms.UpdateOne(restroomfilter, restroomupdate);
+            }
+            GlobalNumbers.Instance.Dispose();
+
+            Console.WriteLine($"Reservation til den {dato}, med personerne {childName}, {motherName} og {fatherName} er gennemført og gemt");
 
 
 
 
         }
 
-        public void showAvailableRooms(DateTime time, string roomType)
+        public static List<Room> showAvailableRooms(DateTime starttime,DateTime endTime, string roomType)
         {
-            var filter = Builders<Room>.Filter.Eq(x => x.Type,roomType) | Builders<Room>.Filter.Eq(x => x.Type, roomType);
+            var filter = Builders<Room>.Filter.Eq(x => x.Type,roomType);
             List<Room> liRo = collectionRooms.Find(filter).ToList();
 
             foreach (var room in liRo)
             {
-                
+                bool roomAlreadyReserved = false;
+                foreach (var res in room.Reservations)
+                {
+                    if (res.ReservationEnd <= starttime && res.ReservationStart >= endTime) continue;
+                    else roomAlreadyReserved = true;
+                }
+                if (roomAlreadyReserved == false) Console.WriteLine(room.Type+": "+room.RoomId + "is available");
             }
 
+            return liRo;
 
         }
         // 5. View
