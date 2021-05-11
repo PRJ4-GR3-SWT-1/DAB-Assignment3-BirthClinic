@@ -194,18 +194,6 @@ namespace DAB_Assignment3_BirthClinic
             List<Clinician> doctors = collectionClinicians.Find(r=>r.Type=="Doctor").ToList();
             List<Clinician> midWives = collectionClinicians.Find(r => r.Type == "MidWife").ToList();
 
-            foreach (var doc in doctors)
-            {
-                Console.WriteLine(doc.FullName);
-            }
-
-            foreach (var doc in midWives)
-            {
-                Console.WriteLine(doc.FullName);
-            }
-
-            return;
-
             Console.WriteLine("Velkommen til reservation af fødsel");
             Console.WriteLine("-----------------------------------");
 
@@ -231,45 +219,48 @@ namespace DAB_Assignment3_BirthClinic
             int time = int.Parse(tidOpsplittet[0]);
             int minut = int.Parse(tidOpsplittet[1]);
 
-            ////Console.WriteLine("Hvilken jordmor vil du gerne have? Indtast tallet ud fra personen");
-            ////foreach (MidWife mW in midWives)
-            ////{
-            ////    Console.WriteLine(mW.PersonId + ". " + mW.FullName);
-            ////}
+            Console.WriteLine("Hvilken jordmor vil du gerne have? Indtast tallet ud fra personen");
+            int counter = 0;
+            foreach (MidWife mW in midWives)
+            {
+                Console.WriteLine(counter + ". " + mW.FullName);
+                counter++;
+            }
 
             int valgtMidwife = int.Parse(Console.ReadLine());
-
+            counter = 0;
             Console.WriteLine("Hvilken doktor vil du gerne have? Indtast tallet ud fra personen");
-            ////foreach (Doctor dc in doctors)
-            ////{
-            ////    Console.WriteLine(dc.PersonId + ". " + dc.FullName);
-            ////}
+            foreach (Doctor dc in doctors)
+            {
+                Console.WriteLine(counter + ". " + dc.FullName);
+                counter++;
+            }
 
             int valgtDoctor = int.Parse(Console.ReadLine());
 
-            ////Console.WriteLine("Du skal også have et fødselsrum reserveret, Vi finder ledige rum for dagen. \n Indtast tallet ud fra rummet");
-            ////ShowAvailableRooms(context, new DateTime(år, måned, dag, time, minut, 00), "birthroom");
-            ////int valgtRumId = int.Parse(Console.ReadLine());
-            ////Room chosenBirthRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
+            //Console.WriteLine("Du skal også have et fødselsrum reserveret, Vi finder ledige rum for dagen. \n Indtast tallet ud fra rummet");
+            //ShowAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), "birthroom");
+            //int valgtRumId = int.Parse(Console.ReadLine());
+            //Room chosenBirthRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
 
-            ////Console.WriteLine("Vil du også reservere et Maternityroom y/n");
-            ////Room chosenMaternityRoom = null;
-            ////if (Console.ReadLine().ToLower() == "y")
-            ////{
-            ////    Console.WriteLine("MaternityRoom reservation \n Indtast tallet ud fra rummet");
-            ////    ShowAvailableRooms(context, new DateTime(år, måned, dag, time, minut, 00), "maternityroom");
-            ////    valgtRumId = int.Parse(Console.ReadLine());
-            ////    chosenMaternityRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
-            ////}
-            ////Console.WriteLine("Vil du også reservere et restingroom y/n");
-            ////Room chosenRestingRoom = null;
-            ////if (Console.ReadLine().ToLower() == "y")
-            ////{
-            ////    Console.WriteLine("RestingRoom reservation \n Indtast tallet ud fra rummet");
-            ////    ShowAvailableRooms(context, new DateTime(år, måned, dag, time, minut, 00), "restingroom");
-            ////    valgtRumId = int.Parse(Console.ReadLine());
-            ////    chosenRestingRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
-            ////}
+            //Console.WriteLine("Vil du også reservere et Maternityroom y/n");
+            //Room chosenMaternityRoom = null;
+            //if (Console.ReadLine().ToLower() == "y")
+            //{
+            //    Console.WriteLine("MaternityRoom reservation \n Indtast tallet ud fra rummet");
+            //    ShowAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), "maternityroom");
+            //    valgtRumId = int.Parse(Console.ReadLine());
+            //    chosenMaternityRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
+            //}
+            //Console.WriteLine("Vil du også reservere et restingroom y/n");
+            //Room chosenRestingRoom = null;
+            //if (Console.ReadLine().ToLower() == "y")
+            //{
+            //    Console.WriteLine("RestingRoom reservation \n Indtast tallet ud fra rummet");
+            //    ShowAvailableRooms(new DateTime(år, måned, dag, time, minut, 00), "restingroom");
+            //    valgtRumId = int.Parse(Console.ReadLine());
+            //    chosenRestingRoom = context.Room.SingleOrDefault(r => r.RoomId == valgtRumId);
+            //}
 
             Console.WriteLine("Tak for dit info, vores super database vil nu oprette reservationen for dig");
 
@@ -295,15 +286,15 @@ namespace DAB_Assignment3_BirthClinic
 
             // DOCTOR OG MIDWIFE MANGLER
 
-            ////doctors[valgtDoctor].AssociatedBirths = new List<ClinicianBirth>();
-            ////doctors[valgtDoctor].AssociatedBirths.Add(CB1);
-            ////midWives[valgtMidwife].AssociatedBirths = new List<ClinicianBirth>();
-            ////midWives[valgtMidwife].AssociatedBirths.Add(CB2);
-            ////// Her sættes clinicians på selve birth
-            ////birth1.CliniciansId = new List<int>();
-            ////birth1.CliniciansId.Add(doctors[valgtDoctor].PersonId);
-            ////birth1.CliniciansId.Add(midWives[valgtMidwife].PersonId);
-            //////
+            doctors[valgtDoctor].AssociatedBirthsId = new List<int>();
+            doctors[valgtDoctor].AssociatedBirthsId.Add(birth1.BirthId);
+            midWives[valgtMidwife].AssociatedBirthsId = new List<int>();
+            midWives[valgtMidwife].AssociatedBirthsId.Add(birth1.BirthId);
+            // Her sættes clinicians på selve birth
+            birth1.CliniciansId = new List<int>();
+            birth1.CliniciansId.Add(doctors[valgtDoctor].PersonId);
+            birth1.CliniciansId.Add(midWives[valgtMidwife].PersonId);
+            //
 
 
             ////// Her sættes reservationerne for alle rum.
@@ -346,6 +337,19 @@ namespace DAB_Assignment3_BirthClinic
             ////Console.WriteLine($"Reservation til den {dato}, med personerne {childName}, {motherName} og {fatherName} er gennemført og gemt");
 
 
+
+
+        }
+
+        public void showAvailableRooms(DateTime time, string roomType)
+        {
+            var filter = Builders<Room>.Filter.Eq(x => x.Type,roomType) | Builders<Room>.Filter.Eq(x => x.Type, roomType);
+            List<Room> liRo = collectionRooms.Find(filter).ToList();
+
+            foreach (var room in liRo)
+            {
+                
+            }
 
 
         }
