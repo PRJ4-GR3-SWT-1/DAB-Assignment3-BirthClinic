@@ -118,9 +118,8 @@ namespace DAB_Assignment3_BirthClinic
         // Person kan indeholde et array af details, som bruges til at fortælle om personen er en clinician, barn, familiemedlem m.m.
         //
 
-        // 2. View
-        //Show clinicians, birth rooms maternity rooms and rest rooms available at the clinic for
-        //the next five days
+        // 1. View
+        //Show planned births for the comingthreedays
 
 
         // 3. View
