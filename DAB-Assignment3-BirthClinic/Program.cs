@@ -207,7 +207,7 @@ namespace DAB_Assignment3_BirthClinic
 
             Console.WriteLine("Hvilken jordmor vil du gerne have? Indtast tallet ud fra personen");
             int counter = 0;
-            foreach (MidWife mW in midWives)
+            foreach (var mW in midWives)
             {
                 Console.WriteLine(counter + ". " + mW.FullName);
                 counter++;
@@ -216,7 +216,7 @@ namespace DAB_Assignment3_BirthClinic
             int valgtMidwife = int.Parse(Console.ReadLine());
             counter = 0;
             Console.WriteLine("Hvilken doktor vil du gerne have? Indtast tallet ud fra personen");
-            foreach (Doctor dc in doctors)
+            foreach (var dc in doctors)
             {
                 Console.WriteLine(counter + ". " + dc.FullName);
                 counter++;
