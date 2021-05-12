@@ -213,6 +213,7 @@ namespace DAB_Assignment3_BirthClinic
             Reservation res2 = new Reservation();
             if (chosenMaternityRoom != null)
             {
+
                 res2.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc);
                 res2.ReservationEnd = res2.ReservationStart + TimeSpan.FromDays(5);
                 res2.UserId = mother1.PersonId;
@@ -225,6 +226,7 @@ namespace DAB_Assignment3_BirthClinic
             Reservation res3 = new Reservation();
             if (chosenRestingRoom != null)
             {
+
                 res3.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) + TimeSpan.FromHours(5);
                 res3.ReservationEnd = res3.ReservationStart + TimeSpan.FromHours(4);
                 res3.UserId = mother1.PersonId;

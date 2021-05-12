@@ -15,6 +15,7 @@ namespace BirthClinicLibrary.Data
         {
             SeedRooms(roomCollection);
             SeedClinicians(personCollection);
+            GlobalNumbers.Instance.Dispose();
         }
 
         private static void SeedRooms(IMongoCollection<Room> collection)
