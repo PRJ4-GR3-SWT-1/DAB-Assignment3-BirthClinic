@@ -311,7 +311,7 @@ namespace DAB_Assignment3_BirthClinic
             birth = collectionBirths.Find(filter).Single();
 
             }
-            catch (System.InvalidOperationException e)
+            catch (System.InvalidOperationException)
             {
                 Console.WriteLine("Ingen fødsler er tilføjet endnu. Tryk 'b' for at tilføje en fødsel");
                 return;
