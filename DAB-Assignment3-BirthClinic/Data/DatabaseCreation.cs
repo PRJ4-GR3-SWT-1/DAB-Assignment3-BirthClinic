@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BirthClinicLibrary.Data;
-using DAB_Assignment3_BirthClinic.Models;
+﻿using DAB_Assignment3_BirthClinic.Models;
 using MongoDB.Driver;
 
 namespace DAB_Assignment3_BirthClinic.Data

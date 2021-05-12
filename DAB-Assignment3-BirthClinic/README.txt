@@ -18,4 +18,4 @@
 4. Til sidst kan man afslutte programmet ved at trykke "x".
 
 ************************** OBS ******************************
-For yderligere information vedrørende beslutninger foretaget i systemet, se vedlagde PDF "DAB_Assignment3_Gruppe19".
+For yderligere information vedrørende beslutninger foretaget i systemet, se vedlagte PDF "DAB_Assignment3_Gruppe19".

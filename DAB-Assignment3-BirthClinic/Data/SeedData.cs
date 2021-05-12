@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-using System.Linq;
 using DAB_Assignment3_BirthClinic.Models;
 using MongoDB.Driver;
 
@@ -15,6 +12,7 @@ namespace BirthClinicLibrary.Data
         {
             SeedRooms(roomCollection);
             SeedClinicians(personCollection);
+            GlobalNumbers.Instance.Dispose();
         }
 
         private static void SeedRooms(IMongoCollection<Room> collection)

@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 using BirthClinicLibrary.Data;
 using DAB_Assignment3_BirthClinic.Models;
-using MongoDB.Bson;
-using MongoDB.Bson.IO;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Mother = DAB_Assignment3_BirthClinic.Models.Mother;
 
@@ -24,8 +19,10 @@ namespace DAB_Assignment3_BirthClinic
 
         static void Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine("Welcome to the dokument based birth clinic :)");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Clear();
+            Console.WriteLine("Welcome to the document based birth clinic program :)");
             var client = new MongoClient(
                 "mongodb://localhost:27017"
             );
@@ -217,6 +214,7 @@ namespace DAB_Assignment3_BirthClinic
             Reservation res2 = new Reservation();
             if (chosenMaternityRoom != null)
             {
+
                 res2.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc);
                 res2.ReservationEnd = res2.ReservationStart + TimeSpan.FromDays(5);
                 res2.UserId = mother1.PersonId;
@@ -229,6 +227,7 @@ namespace DAB_Assignment3_BirthClinic
             Reservation res3 = new Reservation();
             if (chosenRestingRoom != null)
             {
+
                 res3.ReservationStart = new DateTime(år, måned, dag, time, minut, 00, DateTimeKind.Utc) + TimeSpan.FromHours(5);
                 res3.ReservationEnd = res3.ReservationStart + TimeSpan.FromHours(4);
                 res3.UserId = mother1.PersonId;
