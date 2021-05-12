@@ -24,7 +24,8 @@ namespace DAB_Assignment3_BirthClinic
 
         static void Main(string[] args)
         {
-            Console.WriteLine("HWelcome to the dokument based birth clinic :)");
+            Console.BackgroundColor = ConsoleColor.DarkBlue;
+            Console.WriteLine("Welcome to the dokument based birth clinic :)");
             var client = new MongoClient(
                 "mongodb://localhost:27017"
             );
@@ -35,19 +36,22 @@ namespace DAB_Assignment3_BirthClinic
             collectionRooms = database.GetCollection<Room>("Rooms");
             //collectionReservations = database.GetCollection<Reservation>("Reservations");
             _running = true;
-
+            
+            Console.WriteLine("Current Time: " + DateTime.Now);
             while (_running)
             {
-                Console.WriteLine("CurrentTime: " +DateTime.Now);
-
-                Console.WriteLine("Muligheder: ");
+                
+                Console.WriteLine("\n\n---------------\nMuligheder: ");
                 Console.WriteLine("1: Vis planlagte fødsler de næste 3 dage: ");
                 Console.WriteLine("3: Aktuelt igangværende fødsler ");
                 Console.WriteLine("5: Vis reserverede rum og associeret personale til specifik fødsel");
                 Console.WriteLine("B: Lav en reservation til en fødsel");
                 Console.WriteLine("S: Seed data til databasen ");
-                Console.WriteLine("x: Luk ");
+                Console.WriteLine("x: Luk \n---------------");
                 var key = Console.ReadKey();
+
+                Console.Clear();
+
                 HandleKey(key);
             }
 
@@ -303,7 +307,17 @@ namespace DAB_Assignment3_BirthClinic
             Console.WriteLine("\nType Birth ID:");
             int id = int.Parse(Console.ReadLine());
             var filter = Builders<Birth>.Filter.Where(b => b.BirthId == id);
-            Birth birth = collectionBirths.Find(filter).Single();
+            Birth birth=null;
+            try
+            {
+            birth = collectionBirths.Find(filter).Single();
+
+            }
+            catch (System.InvalidOperationException e)
+            {
+                Console.WriteLine("Ingen fødsler er tilføjet endnu. Tryk 'b' for at tilføje en fødsel");
+                return;
+            }
             if (birth == null)
             {
                 Console.WriteLine("Fødslen kunne ikke findes :(");
