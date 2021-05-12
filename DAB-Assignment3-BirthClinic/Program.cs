@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
 using BirthClinicLibrary.Data;
 using DAB_Assignment3_BirthClinic.Models;
-using MongoDB.Bson;
-using MongoDB.Bson.IO;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Mother = DAB_Assignment3_BirthClinic.Models.Mother;
 
@@ -24,8 +19,10 @@ namespace DAB_Assignment3_BirthClinic
 
         static void Main(string[] args)
         {
-            Console.BackgroundColor = ConsoleColor.DarkBlue;
-            Console.WriteLine("Welcome to the dokument based birth clinic :)");
+            Console.BackgroundColor = ConsoleColor.DarkGray;
+            Console.ForegroundColor = ConsoleColor.Black;
+            Console.Clear();
+            Console.WriteLine("Welcome to the document based birth clinic program :)");
             var client = new MongoClient(
                 "mongodb://localhost:27017"
             );
