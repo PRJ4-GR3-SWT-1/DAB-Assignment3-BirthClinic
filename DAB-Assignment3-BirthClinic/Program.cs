@@ -24,7 +24,7 @@ namespace DAB_Assignment3_BirthClinic
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Console.WriteLine("HWelcome to the dokument based birth clinic :)");
             var client = new MongoClient(
                 "mongodb://localhost:27017"
             );
@@ -273,7 +273,7 @@ namespace DAB_Assignment3_BirthClinic
 
         }
 
-        public static List<Room> showAvailableRooms(DateTime starttime,DateTime endTime, string roomType)
+        public static List<Room> showAvailableRooms(DateTime startTime,DateTime endTime, string roomType)
         {
             var filter = Builders<Room>.Filter.Eq(x => x.Type,roomType);
             List<Room> liRo = collectionRooms.Find(filter).ToList();
@@ -283,7 +283,7 @@ namespace DAB_Assignment3_BirthClinic
                 bool roomAlreadyReserved = false;
                 foreach (var res in room.Reservations)
                 {
-                    if (res.ReservationEnd <= starttime || res.ReservationStart >= endTime) continue;
+                    if (res.ReservationEnd <= startTime || res.ReservationStart >= endTime) continue;
                     else roomAlreadyReserved = true;
                 }
                 if (roomAlreadyReserved == false) Console.WriteLine(room.Type+": "+room.RoomId + " is available");
@@ -308,7 +308,7 @@ namespace DAB_Assignment3_BirthClinic
                 return;
             }
 
-            Console.WriteLine("Name: " + birth.Child.FullName+ " mother: "+ birth.Child.Mother.FullName +" Planned to start " + birth.PlannedStartTime.ToString("F"));
+            Console.WriteLine("Name: " + birth.Child.FullName+ " mother: "+ birth.Child.Mother.FullName +" Planned to start " + birth.PlannedStartTime.ToUniversalTime().ToString("F"));
 
             //Find clinicians:
             Console.WriteLine("Associated clinicians: ");
@@ -336,7 +336,7 @@ namespace DAB_Assignment3_BirthClinic
             Console.WriteLine("\nPlanned births the next 3 days:");
             foreach (var b in births)
             {
-                Console.WriteLine("👶 BirthId: " + b.BirthId + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName+".");
+                Console.WriteLine("  BirthId: " + b.BirthId + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName+".");
             }
         }
 
@@ -346,7 +346,7 @@ namespace DAB_Assignment3_BirthClinic
             var births = collectionBirths.Find(b =>
                 (b.PlannedStartTime < DateTime.Now+TimeSpan.FromHours(2)) 
                 && (b.PlannedStartTime > (DateTime.Now + TimeSpan.FromHours(2) - TimeSpan.FromHours(5)))).ToList();
-            Console.WriteLine("\nOngoing Births (Births with a starttime in the last 5 hours)");
+            Console.WriteLine("\nOngoing Births (Births with a startTime in the last 5 hours):");
             foreach (var b in births)
             {
                 Console.WriteLine("BirthId: " + b.BirthId + ". Name: " + b.Child.FullName + ". Mother: " + b.Child.Mother.FullName +".");
